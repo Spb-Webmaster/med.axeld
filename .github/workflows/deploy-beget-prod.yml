@@ -102,6 +102,12 @@ jobs:
             --exclude='.ssh' \
             --exclude='.cache' \
             --exclude='composer2.phar' \
+            `# служебное хозяйство Beget: в репозитории его нет, а --delete снёс бы.` \
+            `# .well-known особенно важен — через него продлевается SSL-сертификат` \
+            --exclude='/cgi-bin' \
+            --exclude='/.well-known' \
+            --exclude='/.composer' \
+            --exclude='/.wget-hsts' \
             --exclude='node_modules' \
             --exclude='.env' \
             --exclude='.env.production' \
