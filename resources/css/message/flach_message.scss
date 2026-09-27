@@ -1,134 +1,133 @@
 @charset "utf-8";
 @import '../variables';
-.flashMessage__wrap {
-    width: 600px;
-    margin: 0 auto;
-    position: relative;
+
+// ============================================================
+// ВСПЛЫВАЮЩЕЕ СООБЩЕНИЕ
+// Разметка: resources/views/components/message/{message,message_error}.blade.php
+// Поведение: resources/js/include/flash_message/flash_message.js
+// ============================================================
+// Появляется в правом верхнем углу и через несколько секунд уходит само.
+// Тип различается цветом рамки, подложки и значка: синий — готово,
+// красный — ошибка. Цветной полосы у края нет намеренно, в проекте
+// такой приём не используется.
+// ============================================================
+
+.flash-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     z-index: 200;
-    top: 40px;
 
-    .flashMessage {
-        position: fixed;
-    }
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: min(420px, calc(100vw - 32px));
+    padding: 14px 44px 14px 16px;
 
+    border: 1px solid $cabBorder;
+    border-radius: 12px;
+    background: $white;
+    box-shadow: 0 12px 32px rgba($black, .14);
 
-    .message {
-        background-color: white;
-        width: 600px;
-        padding: 1em 1em 1em 1.5em;
-        border-left-width: 6px;
-        border-left-style: solid;
-        border-radius: 3px;
-        position: relative;
-        line-height: 1.5;
-        z-index: 200;
+    font-size: 15px;
+    line-height: 1.45;
+    color: $color;
 
+    animation: flash-message-in .22s ease-out;
 
-        & + & {
-            margin-top: 2em;
-        }
-
-        &:before {
-            color: white;
-            width: 1.5em;
-            height: 1.5em;
-            position: absolute;
-            top: 1em;
-            left: -3px;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        p {
-            margin: 0 0 1em;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-    }
-
-    .class__info {
-        .message {
-            border: 1px solid darkolivegreen;
-            border-left-color: darkolivegreen;
-            border-left-width: 6px;
-            border-left-style: solid;
-            background-color: $flashSuccessBg;
-            color: $flashSuccessText;
-
-            &:before {
-                background-color: darkolivegreen;
-                content: "✔";
-            }
-        }
-    }
-
-    .class__alert {
-        .message {
-            border: 1px solid $colorRed;
-            border-left-color: $colorRed;
-            border-left-width: 6px;
-            border-left-style: solid;
-            color: $flashErrorText;
-            background-color: $flashErrorBg;
-
-            &:before {
-                background-color: $colorRed;
-                content: "‼";
-            }
-        }
-    }
-
-    /** не испрльзуем пока **/
-    .message--warning {
-        border: 1px solid darkorange;
-        border-left-color: darkorange;
-        border-left-width: 6px;
-        border-left-style: solid;
-
-        &:before {
-            background-color: darkorange;
-            content: "!";
-        }
-    }
-    /** не испрльзуем пока **/
-
-    // Сам крестик описан в buttons/buttons.scss, здесь — только место в углу
-    .btn-close {
-        position: absolute;
-        right: 12px;
+    // Уходит по таймеру: класс вешает скрипт, по окончании перехода блок удаляется
+    &.is-hiding {
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity .2s, transform .2s;
     }
 }
 
-@media screen and (max-width: 742px) {
-    .flashMessage__wrap {
-        width: 100%;
-        margin: 0 auto;
-        position: relative;
-        z-index: 200;
-        top: 40px;
+@keyframes flash-message-in {
+    from {
+        opacity: 0;
+        transform: translateX(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
-        .flashMessage {
-            position: fixed;
-            width: 97%;
-            left: 2%;
-            right: 1%;
+// ——— Значок ———
+.flash-message__icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    margin-top: 1px;
+    border-radius: 50%;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.flash-message__body {
+    min-width: 0;
+
+    p {
+        margin: 0 0 8px;
+
+        &:last-child {
+            margin-bottom: 0;
         }
+    }
+}
 
+// Несколько ошибок разом — компактным списком без маркеров-точек
+.flash-message__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-        .message {
-            width: 100%;
-            padding: 1em 1em 1em 1.5em;
-            border-left-width: 6px;
-            border-left-style: solid;
-            border-radius: 3px;
-            position: relative;
-            line-height: 1.5;
-            z-index: 200;
-        }
+    li + li {
+        margin-top: 6px;
+    }
+}
+
+.flash-message .btn-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+// ——— Готово ———
+.flash-message.class__info {
+    border-color: rgba($colorBlue, .35);
+    background: $btnPrimaryTint;
+
+    .flash-message__icon {
+        background: $colorBlue;
+        color: $white;
+    }
+}
+
+// ——— Ошибка ———
+.flash-message.class__alert {
+    border-color: rgba($colorRed, .4);
+    background: $bgRedLight;
+    color: $btnAccentText;
+
+    .flash-message__icon {
+        background: $btnAccentBg;
+        color: $white;
+    }
+}
+
+@media (max-width: 640px) {
+    .flash-message {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        font-size: 14px;
     }
 }

@@ -28,9 +28,10 @@
                 </div>
 
                 {{-- Нижней границы у даты рождения нет: дневник ведут и за ребёнка.
-                     Верхняя — сегодня. --}}
-                <x-form.form-input name="birth_date" type="date" label="Дата рождения"
-                                   value="{{ old('birth_date', $user->birth_date?->format('Y-m-d')) }}"/>
+                     Верхняя — сегодня, по ней календарь строит список лет назад. --}}
+                <x-form.form-date name="birth_date" label="Дата рождения"
+                                  :value="$user->birth_date?->format('Y-m-d')"
+                                  :max="now()->format('Y-m-d')"/>
 
                 <div class="input-button">
                     <x-form.form-button :block="true">Сохранить</x-form.form-button>

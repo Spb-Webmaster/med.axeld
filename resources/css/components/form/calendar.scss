@@ -1,0 +1,296 @@
+@charset "utf-8";
+@import '../../variables';
+
+// ============================================================
+// КАЛЕНДАРЬ ДЛЯ ПОЛЯ ДАТЫ
+// Разметка: resources/views/components/form/date-picker.blade.php
+// Логика:   resources/js/include/datepicker/calendar.js
+// ============================================================
+// Перенесён из проекта polise24, цвета переведены на общую таблицу
+// переменных, размеры подогнаны под поля формы (.input-group__input).
+// ============================================================
+// ============================================================
+// CALENDAR — кастомный календарь (компонент x-form.date-picker)
+// Поведение: resources/js/include/datepicker/calendar.js
+// Перенесён из проекта thekompetenz; поле оформлено как .tc-control
+// ============================================================
+
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__label {
+        font-size: 14px;
+        color: $cabMuted;
+    }
+}
+
+.date-wrap {
+    position: relative;
+    display: block;
+}
+
+// Видимое поле: readonly, дата в формате dd.mm.yyyy
+.date-wrap .date-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 12px 8px 40px;
+    background: $white;
+    border: 1px solid $borderInput;
+    border-radius: 8px;
+    color: $color;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color .15s ease, box-shadow .15s ease;
+
+    &::placeholder {
+        color: $cabMuted;
+    }
+
+    &:focus,
+    &.open {
+        outline: 0;
+        border-color: $colorBlue;
+        box-shadow: 0 0 0 3px rgba($colorBlue, .2);
+    }
+}
+
+.date-wrap.is-invalid .date-input {
+    border-color: $colorRed;
+
+    &:focus,
+    &.open {
+        box-shadow: 0 0 0 3px rgba(239, 83, 63, .25);
+    }
+}
+
+.date-wrap .date-ico {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    color: $cabMuted;
+    pointer-events: none;
+}
+
+.date-input.open ~ .date-ico,
+.date-wrap:hover .date-ico {
+    color: $colorBlue;
+}
+
+// ——— Всплывающий календарь ———
+.cal-pop {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 2100;
+    display: none;
+    width: 272px;
+    padding: 14px;
+    border: 1px solid $borderInput;
+    border-radius: 12px;
+    background: $white;
+    box-shadow: 0 8px 32px rgba(15, 22, 40, .14);
+}
+
+.cal-pop.open {
+    display: block;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid $borderInput;
+    border-radius: 8px;
+    background: transparent;
+    color: $cabMuted;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .13s, color .13s;
+
+    &:hover {
+        background: $bgLight;
+        color: $colorBlue;
+    }
+
+    &.is-disabled,
+    &[disabled] {
+        opacity: .4;
+        cursor: default;
+
+        &:hover {
+            background: transparent;
+            color: $cabMuted;
+        }
+    }
+}
+
+.cal-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+// Селект года: нативный, чтобы работал внутри всплывашки и на мобильных
+.cal-year {
+    height: 28px;
+    padding: 0 22px 0 8px;
+    border: 1px solid $borderInput;
+    border-radius: 8px;
+    background: $white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%236c757d" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 4px center;
+    color: $color;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &:hover {
+        border-color: $colorBlue;
+    }
+
+    &:focus {
+        outline: 0;
+        border-color: $colorBlue;
+        box-shadow: 0 0 0 3px rgba($colorBlue, .2);
+    }
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+// Заголовок кликабелен: месяц → год → страница лет
+.cal-month-lbl {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color;
+    cursor: pointer;
+    transition: background .13s, color .13s;
+
+    &:hover {
+        background: $bgLight;
+        color: $colorBlue;
+    }
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+// Сетки выбора месяца и года
+.cal-grid--months {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.cal-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px;
+    border-radius: 8px;
+    color: $color;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+
+    &:hover {
+        background: rgba($colorBlue, .08);
+        color: $colorBlue;
+    }
+
+    &.selected,
+    &.selected:hover {
+        background: $colorBlue;
+        color: $white;
+        font-weight: 700;
+    }
+
+    &.disabled,
+    &.disabled:hover {
+        background: transparent;
+        color: $cabMuted;
+        opacity: .5;
+        cursor: default;
+    }
+}
+
+.cal-dow {
+    padding: 4px 0;
+    color: $cabMuted;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.cal-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    color: $color;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+
+    &:hover {
+        background: rgba($colorBlue, .08);
+        color: $colorBlue;
+    }
+
+    &.empty,
+    &.disabled {
+        cursor: default;
+
+        &:hover {
+            background: transparent;
+            color: $color;
+        }
+    }
+
+    &.disabled {
+        color: $cabMuted;
+        opacity: .5;
+    }
+
+    &.today {
+        font-weight: 700;
+        color: $colorBlue;
+    }
+
+    &.selected,
+    &.selected:hover {
+        background: $colorBlue;
+        color: $white;
+        font-weight: 700;
+    }
+}

@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\Ajax\CityController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Axios\AxiosController;
 use App\Http\Controllers\Cabinet\BloodPressureController;
 use App\Http\Controllers\CabinetController;
-use App\Http\Controllers\FancyBox\FancyBoxController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,15 +56,3 @@ Route::controller(BloodPressureController::class)
 /** ///Дневник давления **/
 /** ///Личный кабинет **/
 
-/** FancyBox AJAX **/
-Route::controller(FancyBoxController::class)->group(function () {
-    Route::post('/fancybox-ajax', 'fancybox');
-});
-/** ///FancyBox AJAX **/
-
-/** Axios async forms **/
-Route::controller(AxiosController::class)->group(function () {
-    Route::post('/upload-form-async', 'async');
-    Route::post('/call-me-blue', 'callMeBlue');
-});
-/** ///Axios async forms **/
