@@ -1,0 +1,110 @@
+@import '../../variables';
+// =============================================
+// Actions Strip
+// =============================================
+
+.actions-strip {
+    padding: 42px 0 ;
+    background: $colorIndigo;
+}
+
+.actions-strip__grid {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+.action_flex {
+    display: flex;
+    align-items: center;
+    img {
+        margin-right: 4px;
+    }
+}
+.action-pill {
+    min-height: 96px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    flex: 1 1 0;
+    min-width: 0;
+    color: $white;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover,
+    &:focus,
+    &:visited {
+        color: $white;
+    }
+
+    &--blue  { background: $actionBlue; }
+    &--green { background: $actionGreen; }
+    &--red   { background: $actionRed; color: $white; }
+}
+
+.action-pill__icon {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 auto;
+
+    &--large {
+        width: 63px;
+        height: 56px;
+    }
+}
+
+.action-pill__qr {
+    width: 88px;
+    height: 88px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+
+.action-pill__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.action-pill__brand {
+    width: 24px;
+    height: 24px;
+}
+
+.action-pill strong,
+.action-pill span {
+    display: block;
+}
+
+.action-pill strong {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.action-pill span {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+// ——— Responsive ———
+@media (max-width: 900px) {
+    .actions-strip__grid {
+        flex-wrap: wrap;
+    }
+
+    .action-pill {
+        padding: 16px;
+        flex: 1 1 calc(50% - 8px);
+    }
+}
+
+@media (max-width: 560px) {
+    .action-pill {
+        flex: 1 1 100%;
+        min-height: 88px;
+        padding: 12px 16px;
+    }
+}

@@ -1,0 +1,234 @@
+@charset "utf-8";
+@import 'variables';
+
+
+@mixin adaptiv-font($pcSize, $mobSize) {
+    $addSize: $pcSize - $mobSize;
+    $maxWidth: $maxWidthWide - 320;
+    font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+
+/*
+@mixin Roboto {
+    font-family: 'Roboto Variable', sans-serif;
+}
+@mixin RobotoFlex {
+    font-family: 'Roboto Flex Variable', sans-serif;
+}
+*/
+
+
+.nav__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 36px;
+    width: 100%;
+    padding: 20px 0 ;
+
+   .pagination {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+
+       li {
+           width: 36px;
+           height: 36px;
+
+           border: 1px solid $borderThin;
+           display: flex;
+           justify-content: center;
+           background: $white;
+           border-radius: 50%;
+           margin: 0 6px;
+           position: relative;
+
+           a, span {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               height: 36px;
+               width: 36px;
+               text-decoration: none;
+               position: relative;
+               top: -1.8px;
+               color: $colorGrey;
+               transition: 0.2s;
+
+
+           }
+
+           &.active, &:hover {
+               background: $colorRed;
+               border: 1px solid $colorRed;
+
+
+               a, span {
+                   color: $white;
+
+               }
+           }
+
+
+       }
+   }
+
+    li.disabled {
+        display: none;
+    }
+
+    i {
+        font-style: normal;
+    }
+}
+
+.nav__pagination_previous {
+    width: 100px;
+margin-right: 5px;
+    li {
+        width: 100px;
+        height: 36px;
+        background: $white;
+        border-radius: 18px;
+        justify-content: flex-start;
+        align-items: center;
+        border: 1px solid $borderThin;
+        transition: 0.2s;
+
+
+        a {
+            color: $colorGrey;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: relative;
+
+            img {
+                margin: 0 8px;
+                position: relative;
+                top: 1px;
+            }
+        }
+
+        &:hover {
+            background: $colorRed;
+            border: 1px solid $colorRed;
+            a, span {
+                color: $white;
+
+            }
+
+        }
+    }
+}
+
+.nav__pagination_next {
+    width: 100px;
+    margin-left: 5px;
+
+    li {
+        width: 100px;
+        height: 36px;
+        background: $white;
+        border-radius: 18px;
+        align-items: center;
+        border: 1px solid $borderThin;
+        transition: 0.2s;
+
+
+        a {
+            color: $colorGrey;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: relative;
+
+            img {
+                margin: 0 8px;
+                position: relative;
+                top: 1px;
+            }
+        }
+        &:hover {
+            background: $colorRed;
+            border: 1px solid $colorRed;
+            a, span {
+                color: $white;
+
+            }
+
+        }
+    }
+}
+
+
+@media (max-width: 1268px) {
+
+    .pagi__6,
+    .pagi__7,
+    .pagi__8,
+    .pagi__9,
+    .pagi__10
+    {
+
+
+    }
+    .pagination {
+        li:nth-child(9),
+        li:nth-child(10),
+        li:nth-child(11),
+        li:nth-child(12),
+        li:nth-child(13),
+        {
+            display: none !important;
+
+        }
+        li.active {
+            display: flex !important;
+        }
+    }
+
+
+}
+
+@media (max-width: 742px) {
+
+    .nav__pagination_previous,
+    .nav__pagination_next
+
+    {
+        width: 36px;
+      li {
+          width: 36px;
+      }
+        i {
+            display: none !important;
+        }
+    }
+
+}
+
+@media (max-width: 542px) {
+    .pagination {
+
+        li:nth-child(6),
+        li:nth-child(7),
+        li:nth-child(8),
+        {
+            display: none !important;
+
+        }
+        li.active {
+            display: flex !important;
+        }
+    }
+}
+
+// pagi__6

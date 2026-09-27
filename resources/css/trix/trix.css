@@ -1,0 +1,44 @@
+.editor-trix {
+  padding-bottom: 30px;
+}
+.editor-trix .trix-button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  border: none;
+}
+.editor-trix .trix-button-group button {
+  width: auto;
+  height: 24px;
+  display: inline-table;
+  text-align: center;
+  padding: 0 8px;
+  background: #EF533F;
+  border-radius: 4px;
+  border: 1px solid #EF533F;
+  color: #FFFFFF;
+  position: relative;
+  transition: 0.3s;
+  text-decoration: none !important;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 24px;
+}
+.editor-trix .trix-button-group button.trix-active {
+  background: #fff;
+  color: #EF533F;
+}
+.editor-trix trix-editor {
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  margin: 0;
+  padding: 16px 0.6em;
+  min-height: 5em;
+  outline: none;
+  line-height: 1.6em;
+}
+.editor-trix trix-editor:empty::before {
+  font-weight: 400;
+}
+
+/*# sourceMappingURL=trix.css.map */

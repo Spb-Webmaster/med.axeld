@@ -1,0 +1,83 @@
+@import '../../variables';
+// =============================================
+// Input Group
+// =============================================
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+
+    .input-group__label {
+        display: block;
+        position: absolute;
+        top: 0;
+        line-height: 50px;
+        color: $colorGrey;
+        left: 5px;
+        padding: 0 5px;
+        transition: line-height 200ms ease-in-out, font-size 200ms ease-in-out, top 200ms ease-in-out;
+        pointer-events: none;
+
+        span { color: $colorRed; }
+    }
+
+    .input-group__input {
+        width: 100%;
+        height: 50px;
+        border: 1px solid $borderInput;
+        border-radius: 3px;
+        padding: 0 10px;
+        appearance: none;
+        cursor: auto !important;
+
+        &:not(:placeholder-shown) + label,
+        &:focus + label {
+            background-color: $white;
+            line-height: 10px;
+            font-size: 14px;
+            top: -5px;
+        }
+
+        &:focus {
+            outline: none;
+            border: 1px solid $colorBlue;
+        }
+
+        // Поле с ошибкой: рамка краснеет, текст ошибки выводится под ним
+        &._error {
+            border-color: $colorRed;
+
+            + label { color: $colorRed; }
+        }
+    }
+
+    /*
+     | У type="date" браузер не показывает placeholder, поэтому `:placeholder-shown`
+     | не сработает — подпись такому полю поднимаем сразу (см. form-input.blade.php).
+     */
+    &._date .input-group__label {
+        background-color: $white;
+        line-height: 10px;
+        font-size: 14px;
+        top: -5px;
+    }
+}
+
+.input-group__hint {
+    display: block;
+    padding: 4px 5px 0;
+    font-size: 13px;
+    color: $colorGrey;
+}
+
+.input-group__error {
+    display: block;
+    padding: 4px 5px 0;
+    font-size: 13px;
+    color: $colorRed;
+}
+
+.input-button {
+    padding: 7px 0 10px;
+    position: relative;
+}

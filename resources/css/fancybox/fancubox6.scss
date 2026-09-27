@@ -1,0 +1,218 @@
+@charset "utf-8";
+@import '../variables';
+
+
+.f-html {
+    border-radius: 12px;
+    padding: 0 !important;
+}
+
+.modal-form-container {
+    position: relative;
+    max-width: 900px;
+    width: 900px;
+
+    &.mini {
+        max-width: 600px;
+        width: 600px;
+    }
+
+    &.middle {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .modal_padding {
+        padding: 24px;
+    }
+
+    .form_title {
+        padding: 3px 0 30px 0;
+        position: relative;
+        cursor: pointer !important;
+
+        .form_title__h1 {
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 1.2em;
+            padding: 0 0 8px 0;
+
+        }
+
+        .form_title__h2 {
+            color: $colorGrey;
+            font-size: 16px;
+            line-height: 1.2em;
+            padding: 0 0 5px 0;
+        }
+
+    }
+/** message_body **/
+    .cabinet-msg-item {
+        margin-bottom: 16px;
+
+        &:last-child {
+            margin-bottom: 30px;
+        }
+
+        .username {
+            color: $colorGrey;
+        }
+
+        .date_minute {
+            padding: 0 10px;
+            color: $white;
+            border-radius: 3px;
+        }
+
+        &.message_from_user {
+            small {
+                .date_minute {
+                    background: $colorGreenLight;
+                }
+
+            }
+        }
+
+        &.message_from_rop {
+            small {
+                .date_minute {
+                    background: $colorRed;
+                }
+
+            }
+        }
+
+        &.message_from_manager {
+            small {
+                .date_minute {
+                    background: $colorBlue;
+
+                }
+
+            }
+        }
+        .message_body {
+padding: 10px 0 0 0;
+        }
+    }
+
+    /** message_body **/
+}
+
+
+/** manager_set_tarif modal **/
+.ms_tarif_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 4px 0 20px;
+}
+
+.fancybox__dialog .ms_tarif_card,
+.fancybox__dialog .ms_tarif_card * {
+    cursor: pointer !important;
+}
+
+.ms_tarif_card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 2px solid $borderLight;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: $white;
+
+    &:hover {
+        border-color: $borderHover;
+    }
+
+    &.is-selected {
+        border-color: $colorRed;
+        background: $bgRedLight;
+
+        .ms_tarif_card__radio::after {
+            opacity: 1;
+        }
+    }
+
+    &--none {
+        border-style: dashed;
+    }
+
+    &__radio {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid $colorCCC;
+        border-radius: 50%;
+        position: relative;
+        transition: border-color 0.2s;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: $colorRed;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    }
+
+    &.is-selected &__radio {
+        border-color: $colorRed;
+    }
+
+    &__body {
+        flex: 1;
+    }
+
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        color: $color;
+    }
+
+    &__sub {
+        font-size: 14px;
+        color: $colorGrey;
+        margin-top: 2px;
+    }
+
+    &__price {
+        font-size: 18px;
+        font-weight: 700;
+        color: $color;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 968px) {
+    .f-html {
+    }
+
+    .modal-form-container {
+        position: relative;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 742px) {
+    .f-html {
+        width: 96%;
+    }
+
+    .modal-form-container {
+        position: relative;
+
+
+        &.mini {
+            max-width: 742px;
+            width: 100%;
+        }
+
+    }
+}

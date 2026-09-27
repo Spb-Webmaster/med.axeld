@@ -1,0 +1,84 @@
+@charset "utf-8";
+@import '../../variables';
+
+
+@mixin adaptiv-font($pcSize, $mobSize) {
+    $addSize: $pcSize - $mobSize;
+    $maxWidth: $maxWidthWide - 320;
+    font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+
+.breadcrumbs {
+    position: relative;
+    padding: 20px 0;
+    min-height: 59px;
+
+    ul {
+        li {
+            list-style-type: none;
+            display: inline-block;
+            color: $colorGrey;
+            text-decoration: none;
+            font-size: 15px;
+            position: relative;
+            a , span {
+                color: $colorGrey;
+                text-decoration: none;
+                font-size: 15px;
+                position: relative;
+                padding: 0 4px;
+                display: inline-block;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            &:first-child a {
+                padding-left: 0;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width:740px) {
+    .breadcrumbs {
+        padding: 5px 0 16px 0;
+        min-height: 0;
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            li {
+                display: block;
+                font-size: 14px;
+
+                a, span {
+                    padding: 2px 5px 2px 6px;
+
+                }
+                a {
+                    text-decoration: underline;
+                }
+            }
+
+        }
+    }
+}
+@media screen and (max-width:568px) {
+    .breadcrumbs {
+        ul {
+
+            li {
+
+
+                a, span {
+                    padding: 2px 5px 2px 0;
+
+                }
+
+            }
+
+        }
+    }
+}
+

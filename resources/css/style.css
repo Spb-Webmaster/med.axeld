@@ -1,0 +1,150 @@
+@charset "UTF-8";
+@import url("reset.css");
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #282828;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+body .content_ {
+  flex: 1 0 auto;
+  background: #FFFFFF;
+}
+body footer {
+  flex-shrink: 0;
+}
+
+.container, .block {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.clear {
+  clear: both;
+}
+
+a {
+  color: #EF533F;
+}
+
+a:hover {
+  color: red;
+  text-decoration: none;
+}
+
+.color_red, .red {
+  color: #EF533F;
+}
+
+.black {
+  color: #000 !important;
+}
+
+.well {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.0784313725);
+}
+.well.green {
+  color: #43D38B;
+}
+.well.red {
+  color: #EF533F;
+}
+.well.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.grey {
+  color: #667085;
+}
+
+.well_green {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #43D38B;
+  color: #fff;
+  margin-bottom: 30px;
+}
+.well_green h1, .well_green h2, .well_green h3, .well_green h4, .well_green p, .well_green div {
+  color: #fff !important;
+}
+
+.well_yellow {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #FF931E;
+  color: #fff;
+  margin-bottom: 30px;
+}
+.well_yellow h1, .well_yellow h2, .well_yellow h3, .well_yellow h4, .well_yellow p, .well_yellow div {
+  color: #fff !important;
+}
+
+.cabinet_radius12_fff {
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.0784313725);
+  background: #fff;
+}
+
+.fancybox__dialog * {
+  user-select: auto !important; /* Включаем выделение текста */
+  cursor: default !important; /*Меняем курсор мыши на стандартный */
+}
+
+.background_F5F5F7 {
+  background: #F5F5F7;
+}
+
+/** временно **/
+.scroll-block {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.scroll-block::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+
+.scroll-block::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-block::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #fff;
+}
+
+.scroll-block:hover::-webkit-scrollbar-thumb {
+  background: #ebebed;
+}
+
+/*# sourceMappingURL=style.css.map */

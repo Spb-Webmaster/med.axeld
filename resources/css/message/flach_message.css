@@ -1,0 +1,125 @@
+@charset "UTF-8";
+.flashMessage__wrap {
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 200;
+  top: 40px;
+  /** не испрльзуем пока **/
+  /** не испрльзуем пока **/
+}
+.flashMessage__wrap .flashMessage {
+  position: fixed;
+}
+.flashMessage__wrap .message {
+  background-color: white;
+  width: 600px;
+  padding: 1em 1em 1em 1.5em;
+  border-left-width: 6px;
+  border-left-style: solid;
+  border-radius: 3px;
+  position: relative;
+  line-height: 1.5;
+  z-index: 200;
+}
+.flashMessage__wrap .message + .flashMessage__wrap .message {
+  margin-top: 2em;
+}
+.flashMessage__wrap .message:before {
+  color: white;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  top: 1em;
+  left: -3px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  line-height: 1.5;
+  text-align: center;
+}
+.flashMessage__wrap .message p {
+  margin: 0 0 1em;
+}
+.flashMessage__wrap .message p:last-child {
+  margin-bottom: 0;
+}
+.flashMessage__wrap .class__info .message {
+  border: 1px solid darkolivegreen;
+  border-left-color: darkolivegreen;
+  border-left-width: 6px;
+  border-left-style: solid;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+.flashMessage__wrap .class__info .message:before {
+  background-color: darkolivegreen;
+  content: "✔";
+}
+.flashMessage__wrap .class__alert .message {
+  border: 1px solid #EF533F;
+  border-left-color: #EF533F;
+  border-left-width: 6px;
+  border-left-style: solid;
+  color: #842029;
+  background-color: #f8d7da;
+}
+.flashMessage__wrap .class__alert .message:before {
+  background-color: #EF533F;
+  content: "‼";
+}
+.flashMessage__wrap .message--warning {
+  border: 1px solid darkorange;
+  border-left-color: darkorange;
+  border-left-width: 6px;
+  border-left-style: solid;
+}
+.flashMessage__wrap .message--warning:before {
+  background-color: darkorange;
+  content: "!";
+}
+.flashMessage__wrap .btn-close {
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  padding: 0.25em 0.25em;
+  color: #000;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  border: 0;
+  border-radius: 0.25rem;
+  opacity: 0.5;
+  right: 12px;
+  position: absolute;
+  cursor: pointer;
+}
+.flashMessage__wrap .btn-close:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 742px) {
+  .flashMessage__wrap {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 200;
+    top: 40px;
+  }
+  .flashMessage__wrap .flashMessage {
+    position: fixed;
+    width: 97%;
+    left: 2%;
+    right: 1%;
+  }
+  .flashMessage__wrap .message {
+    width: 100%;
+    padding: 1em 1em 1em 1.5em;
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-radius: 3px;
+    position: relative;
+    line-height: 1.5;
+    z-index: 200;
+  }
+}
+
+/*# sourceMappingURL=flach_message.css.map */

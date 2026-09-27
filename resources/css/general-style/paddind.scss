@@ -1,0 +1,30 @@
+@for $i from 0 through 100 {
+    .pad_t#{$i} {
+        padding-top: #{$i}#{'px'};
+    }
+    .pad_t#{$i}_important {
+        padding-top: #{$i}#{'px !important'};
+    }
+
+    .pad_l#{$i} {
+        padding-left: #{$i}#{'px'};
+    }
+    .pad_l#{$i}_important {
+        padding-left: #{$i}#{'px !important'};
+    }
+    .pad_b#{$i} {
+        padding-bottom: #{$i}#{'px'};
+    }
+    .pad_b#{$i}_important {
+        padding-bottom: #{$i}#{'px !important'};
+    }
+    .pad_r#{$i} {
+        padding-right: #{$i}#{'px'};
+    }
+    .pad_r#{$i}_important {
+        padding-right: #{$i}#{'px !important'};
+    }
+
+}
+
+

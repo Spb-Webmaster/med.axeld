@@ -1,0 +1,33 @@
+.form-form_loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+.form-form_loader.active {
+  display: flex;
+}
+.form-form_loader.active .dots {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  color: #ffffff;
+  box-shadow: 21.3px 0 0 7.8px, 42.6px 0 0 3.4px, 63.9px 0 0 0;
+  transform: translateX(-42.6px);
+  animation: dots-loader 0.9s infinite alternate linear;
+}
+@keyframes dots-loader {
+  50% {
+    box-shadow: 21.3px 0 0 3.4px, 42.6px 0 0 7.8px, 63.9px 0 0 3.4px;
+  }
+  100% {
+    box-shadow: 21.3px 0 0 0, 42.6px 0 0 3.4px, 63.9px 0 0 7.8px;
+  }
+}
+
+/*# sourceMappingURL=form-loader.css.map */

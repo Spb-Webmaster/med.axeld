@@ -1,0 +1,207 @@
+.programs {
+  padding: 28px 0 40px;
+}
+
+.programs h2 {
+  max-width: 795px;
+  font-size: 46px;
+  line-height: 52px;
+  margin: 0;
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 600;
+  color: #282828;
+}
+
+.programs h2 span {
+  color: #ef533f;
+}
+
+.programs__layout {
+  margin-top: 22px;
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.programs__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 16px;
+  flex: 0 0 870px;
+  width: 870px;
+}
+
+.programs__grid .program-card {
+  width: 427px;
+  height: 166px;
+}
+
+.programs__aside {
+  flex: 0 0 288px;
+  width: 288px;
+}
+
+.programs__aside .program-card {
+  height: 348px;
+  width: 288px;
+}
+
+.program-card {
+  border-radius: 16px;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  flex: 0 0 auto;
+}
+
+.program-card__link {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 20px 24px;
+  text-decoration: none;
+}
+
+.program-card__cta {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f5f5f7;
+  font-size: 18px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.program-card__arrow {
+  width: 8px;
+  height: 16px;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.program-card__letter {
+  position: absolute;
+  right: -16px;
+  top: 0;
+  z-index: 1;
+  display: block;
+  transform: rotate(-15deg);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.program-card__letter--m {
+  width: 125px;
+  top: -2px;
+}
+
+.program-card__letter--b {
+  width: 100px;
+  top: 3px;
+}
+
+.program-card__letter--c {
+  width: 103px;
+  top: 2px;
+}
+
+.program-card__letter--d {
+  width: 101px;
+  top: 2px;
+}
+
+.program-card__letter--r {
+  width: 116px;
+  top: auto;
+  right: auto;
+  left: calc(50% + 64px);
+  bottom: 16px;
+  transform: translateX(-50%) rotate(-15deg);
+}
+
+.program-card h3 {
+  margin: 0;
+  max-width: 240px;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1.3em;
+  letter-spacing: 0;
+  color: #ffffff;
+}
+
+.program-card--green {
+  background: #0e913d;
+}
+
+.program-card--orange {
+  background: #ff9341;
+}
+
+.program-card--dark {
+  background: #383838;
+}
+
+.program-card--dark .program-card__link {
+  padding-top: 40px;
+}
+
+.program-card--blue {
+  background: #296dbd;
+}
+
+.program-card--red {
+  background: #ff3b30;
+}
+
+@media (max-width: 1212px) {
+  .programs__layout {
+    flex-direction: column;
+  }
+  .programs__aside {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .programs__aside .program-card {
+    width: 100%;
+    height: 166px;
+  }
+  .programs__aside .program-card .program-card__link {
+    padding-top: 20px;
+  }
+  .programs__aside .program-card .program-card__letter--r {
+    left: auto;
+    right: -16px;
+    bottom: 8px;
+    transform: rotate(-15deg);
+  }
+  .programs__grid {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .programs__grid .program-card {
+    width: calc((100% - 16px) / 2);
+  }
+}
+@media (max-width: 760px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 16px;
+  }
+  .programs h2 {
+    font-size: 32px;
+  }
+  .programs__grid .program-card {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=programs.css.map */

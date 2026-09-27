@@ -1,0 +1,134 @@
+@charset "utf-8";
+@import '../variables';
+.flashMessage__wrap {
+    width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 200;
+    top: 40px;
+
+    .flashMessage {
+        position: fixed;
+    }
+
+
+    .message {
+        background-color: white;
+        width: 600px;
+        padding: 1em 1em 1em 1.5em;
+        border-left-width: 6px;
+        border-left-style: solid;
+        border-radius: 3px;
+        position: relative;
+        line-height: 1.5;
+        z-index: 200;
+
+
+        & + & {
+            margin-top: 2em;
+        }
+
+        &:before {
+            color: white;
+            width: 1.5em;
+            height: 1.5em;
+            position: absolute;
+            top: 1em;
+            left: -3px;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 1em;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .class__info {
+        .message {
+            border: 1px solid darkolivegreen;
+            border-left-color: darkolivegreen;
+            border-left-width: 6px;
+            border-left-style: solid;
+            background-color: $flashSuccessBg;
+            color: $flashSuccessText;
+
+            &:before {
+                background-color: darkolivegreen;
+                content: "✔";
+            }
+        }
+    }
+
+    .class__alert {
+        .message {
+            border: 1px solid $colorRed;
+            border-left-color: $colorRed;
+            border-left-width: 6px;
+            border-left-style: solid;
+            color: $flashErrorText;
+            background-color: $flashErrorBg;
+
+            &:before {
+                background-color: $colorRed;
+                content: "‼";
+            }
+        }
+    }
+
+    /** не испрльзуем пока **/
+    .message--warning {
+        border: 1px solid darkorange;
+        border-left-color: darkorange;
+        border-left-width: 6px;
+        border-left-style: solid;
+
+        &:before {
+            background-color: darkorange;
+            content: "!";
+        }
+    }
+    /** не испрльзуем пока **/
+
+    // Сам крестик описан в buttons/buttons.scss, здесь — только место в углу
+    .btn-close {
+        position: absolute;
+        right: 12px;
+    }
+}
+
+@media screen and (max-width: 742px) {
+    .flashMessage__wrap {
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 200;
+        top: 40px;
+
+        .flashMessage {
+            position: fixed;
+            width: 97%;
+            left: 2%;
+            right: 1%;
+        }
+
+
+        .message {
+            width: 100%;
+            padding: 1em 1em 1em 1.5em;
+            border-left-width: 6px;
+            border-left-style: solid;
+            border-radius: 3px;
+            position: relative;
+            line-height: 1.5;
+            z-index: 200;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+.banner {
+  width: 100%;
+  max-width: 1172px !important;
+  background-size: cover;
+  border-radius: 12px;
+  height: 135px;
+  margin: 20px 0;
+}
+
+@media (max-width: 468px) {
+  .banner {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=banner.css.map */

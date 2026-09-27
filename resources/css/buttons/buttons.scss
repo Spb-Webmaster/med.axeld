@@ -1,0 +1,346 @@
+@charset "utf-8";
+@import '../variables';
+
+// ============================================================
+// КНОПКИ САЙТА — единственное место, где они описаны
+// ============================================================
+// Гамма — синий и красный, роли разведены:
+//   синий  ($colorBlue)  — основное действие: войти, сохранить, изменить;
+//   красный ($colorRed)  — призыв к действию (btn_accent) и всё необратимое
+//                          (btn_danger): удалить, выйти.
+// Зелёный, оранжевый и индиго из прежнего набора убраны — в гамме их нет.
+//
+// Состав:
+//   .btn            — обычная кнопка, по умолчанию синяя
+//   .btn_accent     — красная заливка, главный призыв к действию
+//   .btn_danger     — красный контур, необратимое действие
+//   .btn_outline    — синий контур, второстепенное действие
+//   .btn_white      — белая с серой рамкой, отмена
+//   .btn_ghost      — без фона и рамки
+//   .btn_grey       — серая, нейтральное действие
+//   .btn_sm / .btn_lg / .btn_block — размеры
+//   .btn-round      — круглая иконочная (стрелки календаря)
+//   .btn-pill       — пилюля-переключатель (годы, «Сегодня»)
+//   .btn-close      — крестик закрытия
+//
+// Размеры кнопки настраиваются переменными --btn-height / --btn-padding:
+// окружению достаточно поменять их, лезть в сами правила не нужно.
+// ============================================================
+
+// ——— Основа ———
+.btn {
+    --btn-height: #{$btnHeight};
+    --btn-padding: 0 22px;
+    --btn-font-size: 15px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: var(--btn-height);
+    padding: var(--btn-padding);
+    border: 1px solid transparent;
+    border-radius: $btnRadius;
+    background: $btnPrimaryBg;
+    color: $white;
+    font: inherit;
+    font-size: var(--btn-font-size);
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none !important;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background .18s, border-color .18s, color .18s, box-shadow .18s;
+
+    &:hover {
+        background: $btnPrimaryHover;
+        color: $white;
+    }
+
+    // Нажатие отыгрывается цветом, а не сдвигом: кнопки стоят в формах,
+    // и прыжок на 1px при клике заметнее самого нажатия
+    &:active {
+        background: $btnPrimaryActive;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $colorBlue;
+        outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[disabled],
+    &.is-disabled {
+        opacity: .45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+// ——— Красная заливка: главный призыв к действию ———
+.btn.btn_accent {
+    background: $btnAccentBg;
+    border-color: transparent;
+    color: $white;
+
+    &:hover {
+        background: $btnAccentHover;
+    }
+
+    &:active {
+        background: $btnAccentActive;
+    }
+
+    &:focus-visible {
+        outline-color: $btnAccentBg;
+    }
+}
+
+// ——— Красный контур: удаление, выход и прочее необратимое ———
+.btn.btn_danger {
+    background: $white;
+    border-color: $colorRed;
+    color: $btnAccentText;
+
+    &:hover {
+        background: $btnAccentBg;
+        border-color: $btnAccentBg;
+        color: $white;
+    }
+
+    &:active {
+        background: $btnAccentActive;
+        border-color: $btnAccentActive;
+    }
+
+    &:focus-visible {
+        outline-color: $btnAccentBg;
+    }
+}
+
+// ——— Синий контур: второстепенное действие ———
+.btn.btn_outline {
+    background: transparent;
+    border-color: $colorBlue;
+    color: $colorBlue;
+
+    &:hover {
+        background: $btnPrimaryTint;
+        color: $btnPrimaryHover;
+    }
+
+    &:active {
+        background: $btnPrimaryBg;
+        color: $white;
+    }
+}
+
+// ——— Белая: отмена рядом с основным действием ———
+.btn.btn_white {
+    background: $white;
+    border-color: $cabBorder;
+    color: $color;
+
+    &:hover {
+        background: $btnPrimaryTint;
+        border-color: $colorBlue;
+        color: $btnPrimaryHover;
+    }
+
+    &:active {
+        background: $borderLine;
+    }
+}
+
+// ——— Без фона и рамки ———
+.btn.btn_ghost {
+    background: transparent;
+    border-color: transparent;
+    color: $colorBlue;
+
+    &:hover {
+        background: $btnPrimaryTint;
+        color: $btnPrimaryHover;
+    }
+}
+
+// ——— Серая: нейтральное действие ———
+.btn.btn_grey {
+    background: $btnMutedBg;
+    border-color: transparent;
+    color: $white;
+
+    &:hover {
+        background: $btnMutedHover;
+    }
+}
+
+// ——— Размеры ———
+.btn.btn_sm {
+    --btn-height: #{$btnHeightSm};
+    --btn-padding: 0 14px;
+    --btn-font-size: 14px;
+
+    border-radius: 8px;
+}
+
+.btn.btn_lg {
+    --btn-height: #{$btnHeightLg};
+    --btn-padding: 0 30px;
+    --btn-font-size: 17px;
+
+    border-radius: 12px;
+}
+
+// Во всю ширину родителя — формы, узкие колонки, мобильные экраны
+.btn.btn_block {
+    display: flex;
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .btn {
+        --btn-height: #{$btnHeightSm + 6px};
+        --btn-padding: 0 18px;
+    }
+
+    .btn.btn_lg {
+        --btn-height: #{$btnHeight};
+        --btn-font-size: 16px;
+    }
+}
+
+// ============================================================
+// Круглая иконочная кнопка — стрелки календаря, закрытие окна
+// Размер настраивается переменной --btn-round-size у любого предка,
+// поэтому в узкой шапке модального окна её достаточно уменьшить.
+// ============================================================
+.btn-round {
+    /*
+     | Размер берём с запасным значением, а не объявляем --btn-round-size здесь:
+     | собственное объявление на элементе перебило бы то, что задал предок,
+     | и настройка размера снаружи перестала бы работать.
+     */
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: var(--btn-round-size, #{$btnRoundSize});
+    height: var(--btn-round-size, #{$btnRoundSize});
+    padding: 0;
+    border: 1px solid $cabBorder;
+    border-radius: 50%;
+    background: $white;
+    color: $colorGrey;
+    font: inherit;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s, opacity .15s;
+
+    &:hover:not(:disabled) {
+        background: $btnPrimaryTint;
+        border-color: $colorBlue;
+        color: $colorBlue;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $colorBlue;
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: .35;
+    }
+
+    svg {
+        width: 40%;
+        height: 40%;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+    }
+
+    // Закрытие окна — действие с красным смыслом, но не разрушительное:
+    // подкрашиваем только при наведении
+    &--close:hover:not(:disabled) {
+        background: $bgRedLight;
+        border-color: $colorRed;
+        color: $btnAccentText;
+    }
+}
+
+// ============================================================
+// Пилюля-переключатель — лента годов, кнопка «Сегодня»
+// ============================================================
+.btn-pill {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: 32px;
+    padding: 0 14px;
+    border: 1px solid $cabBorder;
+    border-radius: 999px;
+    background: $white;
+    color: $colorGrey;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s, opacity .15s;
+
+    &:hover:not(:disabled) {
+        border-color: $colorBlue;
+        color: $colorBlue;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $colorBlue;
+        outline-offset: 2px;
+    }
+
+    // Выбранный элемент заливаем фоном — цветных полос у края в проекте не используем
+    &.is-active {
+        background: $btnPrimaryBg;
+        border-color: $btnPrimaryBg;
+        color: $white;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: .4;
+    }
+}
+
+// ============================================================
+// Крестик закрытия
+// Позиционирование задаёт окружение (например .flash .btn-close)
+// ============================================================
+.btn-close {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: .25em;
+    border: 0;
+    border-radius: 6px;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    color: $black;
+    opacity: .5;
+    cursor: pointer;
+    transition: opacity .15s;
+
+    &:hover {
+        opacity: .85;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $colorBlue;
+        outline-offset: 2px;
+        opacity: 1;
+    }
+}

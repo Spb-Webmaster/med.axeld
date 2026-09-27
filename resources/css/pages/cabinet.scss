@@ -1,0 +1,258 @@
+@charset "utf-8";
+@import '../variables';
+
+// ============================================================
+// ЛИЧНЫЙ КАБИНЕТ — оболочка с внутренним меню
+// Разметка: resources/views/components/cabinet/{shell,nav}.blade.php,
+//           resources/views/cabinet/*.blade.php
+// Форма входа оформлена отдельно — pages/auth.scss
+// ============================================================
+
+.cab-page {
+    padding: 40px 16px 64px;
+    background: $cabBg;
+}
+
+.cab-page__inner {
+    max-width: $containerWidth;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+// ——— Внутреннее меню ———
+.cab-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px;
+    background: $cabCardBg;
+    border: 1px solid $cabBorder;
+    border-radius: 14px;
+    position: sticky;
+    top: 16px;
+}
+
+.cab-nav__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: $colorGrey;
+    font: inherit;
+    font-size: 15px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+
+    &:hover {
+        background: $bgLight;
+        color: $color;
+    }
+
+    // Активный раздел подсвечиваем фоном, а не полосой у края
+    &.is-active {
+        background: $cabNavActive;
+        color: $white;
+    }
+
+    &.is-disabled {
+        color: $colorGreyMuted;
+        cursor: default;
+
+        &:hover {
+            background: none;
+            color: $colorGreyMuted;
+        }
+    }
+
+    &--exit {
+        color: $colorRed;
+
+        &:hover {
+            background: $bgRedLight;
+            color: $colorRed;
+        }
+    }
+}
+
+.cab-nav__ico {
+    flex: 0 0 auto;
+}
+
+.cab-nav__soon {
+    margin-left: auto;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: $bgGreyLight;
+    color: $colorGreyMuted;
+    font-size: 11px;
+    font-style: normal;
+    text-transform: lowercase;
+}
+
+.cab-nav__logout {
+    margin: 0;
+}
+
+// ——— Содержимое ———
+.cab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.cab-content__sub {
+    margin-bottom: 4px;
+}
+
+.cab-content__title {
+    margin: 0 0 6px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: $color;
+}
+
+.cab-content__lead {
+    margin: 0;
+    font-size: 15px;
+    color: $cabMuted;
+}
+
+// ——— Карточка раздела ———
+.cab-card {
+    padding: 22px 24px 24px;
+    background: $cabCardBg;
+    border: 1px solid $cabBorder;
+    border-radius: 14px;
+
+    // Отступ от верха при переходе по якорю (#password)
+    scroll-margin-top: 20px;
+}
+
+.cab-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    .cab-card__title {
+        margin: 0;
+    }
+}
+
+.cab-card__title {
+    margin: 0 0 16px;
+    font-size: 19px;
+    font-weight: 600;
+    color: $color;
+}
+
+// ——— Список «поле — значение» ———
+.cab-list {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 24px;
+
+    > div {
+        min-width: 0;
+    }
+
+    dt {
+        margin-bottom: 2px;
+        font-size: 13px;
+        color: $cabMuted;
+    }
+
+    dd {
+        margin: 0;
+        font-size: 16px;
+        color: $color;
+        overflow-wrap: anywhere;
+    }
+}
+
+.cab-note {
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: $cabMuted;
+}
+
+// ——— Формы кабинета ———
+.cab-form {
+    max-width: 560px;
+}
+
+.cab-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+}
+
+/*
+ | Календарь дневника внутри кабинета: собственный контейнер и вертикальные
+ | отступы ему здесь не нужны — шириной и полями управляет .cab-content.
+ */
+.cab-content .bp-calendar {
+    padding: 0;
+
+    > .container {
+        max-width: none;
+        padding: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .cab-page__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .cab-nav {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .cab-nav__item {
+        width: auto;
+    }
+
+    .cab-nav__logout {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .cab-page {
+        padding: 24px 12px 48px;
+    }
+
+    .cab-content__title {
+        font-size: 24px;
+    }
+
+    .cab-card {
+        padding: 18px 16px 20px;
+    }
+
+    .cab-list,
+    .cab-row {
+        grid-template-columns: 1fr;
+    }
+
+    .cab-nav__soon {
+        display: none;
+    }
+}

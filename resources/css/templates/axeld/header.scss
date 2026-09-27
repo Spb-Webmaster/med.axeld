@@ -1,0 +1,115 @@
+@charset "utf-8";
+@import '../../variables';
+
+// ============================================================
+// HEADER
+// Разметка: resources/views/templates/axeld/header.blade.php
+// Вход в кабинет: resources/views/components/cabinet/enter.blade.php
+// ============================================================
+
+.site-header {
+    background: $white;
+    border-bottom: 1px solid $cabBorder;
+}
+
+.site-header__inner {
+    max-width: $containerWidth;
+    margin: 0 auto;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.site-header__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    text-decoration: none;
+    transition: opacity .15s;
+
+    &:hover {
+        opacity: .8;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $colorBlue;
+        outline-offset: 4px;
+        border-radius: 8px;
+    }
+}
+
+.site-header__mark {
+    display: block;
+    width: 46px;
+    height: 46px;
+}
+
+// Название в две строки — так логотип занимает меньше ширины,
+// и блок остаётся компактным рядом с входом в кабинет
+.site-header__name {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: $colorBlue;
+    white-space: nowrap;
+}
+
+// ——— Авторизованный: имя и выход ———
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-user__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: $color;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+
+    &:hover {
+        background: $bgLight;
+        color: $colorBlue;
+    }
+}
+
+// Кнопка выхода — .btn-round.btn-round--close из buttons.scss,
+// здесь только размер под высоту шапки
+.header-user__logout {
+    --btn-round-size: 36px;
+
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .site-header__inner {
+        padding: 12px;
+    }
+
+    .site-header__mark {
+        width: 36px;
+        height: 36px;
+    }
+
+    .site-header__name {
+        font-size: 15px;
+    }
+
+    .header-user__link span {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

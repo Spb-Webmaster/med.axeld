@@ -1,0 +1,44 @@
+@for $i from 1 through 100 {
+    .w_#{$i} {
+        width: #{$i}#{'%'};
+    }
+    .w_#{$i}_important {
+        width: #{$i}#{'% !important'};
+    }
+    .w_#{$i}_px {
+        width: #{$i}#{'px'};
+    }
+    .w_#{$i}_px_important {
+        width: #{$i}#{'px !important'};
+    }
+
+}
+
+.w_200_px {
+    width: 200px;
+}
+
+.w_200_px_important {
+    width: 200px !important;
+}
+
+.w_300_px {
+    width: 300px;
+}
+.w_300_px_important {
+    width: 300px !important;
+}
+
+.w_265_px {
+    width: 265px;
+}
+.w_265_px_important {
+    width: 265px !important;
+}
+
+.w_400_px {
+    width: 400px;
+}
+.w_400_px_important {
+    width: 400px !important;
+}

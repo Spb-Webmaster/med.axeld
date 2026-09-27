@@ -1,0 +1,204 @@
+.schedule {
+  background: #575eef;
+  color: #fff;
+  padding: 52px 0;
+  overflow: hidden;
+  height: auto;
+}
+.schedule h2 {
+  margin: 0;
+}
+
+.schedule__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.schedule__head h2 {
+  max-width: 795px;
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 52px;
+}
+.schedule__head a {
+  min-height: 64px;
+  padding: 16px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ef533f;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.schedule__head a:hover {
+  background: rgb(235.8615384615, 49.2615384615, 25.3384615385);
+  color: #fff;
+}
+
+.schedule-swiper {
+  overflow: hidden;
+}
+.schedule-swiper .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 20px;
+}
+.schedule-swiper .swiper-slide {
+  flex-shrink: 0;
+  width: 340px;
+  height: auto;
+}
+
+.schedule-swiper__dots {
+  margin-top: 36px;
+  position: static;
+  text-align: left;
+}
+.schedule-swiper__dots .swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  opacity: 1;
+  margin: 0 6px 0 0;
+}
+.schedule-swiper__dots .swiper-pagination-bullet-active {
+  background: #fff;
+}
+
+.course-card {
+  width: 340px;
+  min-height: 446px;
+  background: #fff;
+  border-radius: 20px;
+  color: #282828;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.course-card__body {
+  padding: 30px 26px 24px;
+  flex: 1;
+}
+.course-card__body h3 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 10px;
+}
+.course-card__body p {
+  margin: 24px 0 20px;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.course-card__meta {
+  margin: 0;
+}
+.course-card__meta div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #f0f0f0;
+}
+.course-card__meta dt,
+.course-card__meta dd {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.course-card__meta dd {
+  text-align: right;
+}
+
+.course-card__price {
+  min-height: 68px;
+  background: #ffe135;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
+  padding: 12px 20px;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .schedule__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .schedule-swiper .swiper-slide {
+    width: 320px;
+  }
+  .course-card {
+    width: 320px;
+    min-height: 430px;
+  }
+  .course-card__body {
+    padding: 26px 22px 24px;
+  }
+  .course-card__body h3 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 760px) {
+  .schedule {
+    padding-top: 48px;
+  }
+  .schedule__head {
+    margin-bottom: 28px;
+  }
+  .schedule__head h2 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .schedule__head a {
+    min-height: 56px;
+    padding: 12px 20px;
+    font-size: 20px;
+  }
+  .schedule-swiper .swiper-slide {
+    width: 280px;
+  }
+  .course-card {
+    width: 280px;
+    min-height: 390px;
+  }
+  .course-card__body {
+    padding: 22px 18px 18px;
+  }
+  .course-card__body h3 {
+    font-size: 26px;
+    text-underline-offset: 6px;
+  }
+  .course-card__body p {
+    font-size: 16px;
+  }
+  .course-card__meta dt,
+  .course-card__meta dd {
+    font-size: 16px;
+  }
+  .course-card__price {
+    min-height: 60px;
+    font-size: 24px;
+  }
+}
+
+/*# sourceMappingURL=schedule.css.map */

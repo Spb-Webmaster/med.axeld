@@ -1,0 +1,235 @@
+@import '../../variables';
+// =============================================
+// Block 3 — Hero Slider + News
+// =============================================
+
+$block3-height: 420px;
+$block3-height-mob: 260px;
+$block3-news-width: 367px;
+
+.block_3 {
+    width: 100%;
+    overflow: hidden;
+    padding: 30px 0;
+
+    .scroll-block {
+        height: 387px;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    .scroll-block::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+
+    .scroll-block::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .scroll-block::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: $borderInput;
+        position: relative;
+        right: -10px
+    }
+
+    .scroll-block:hover::-webkit-scrollbar-thumb {
+        background: $colorRed;
+    }
+
+
+    .swiper-slide {
+        background: $colorCCC;
+
+        a {
+
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            span {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .flex_3 {
+        display: flex;
+        align-items: stretch;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ——— SLIDER ———
+    .block_3_slider {
+        flex: 1 1 0;
+        min-width: 0;
+        position: relative;
+
+        .block3-swiper {
+            width: 100%;
+            max-width: 795px;
+            height: $block3-height;
+            overflow: hidden;
+
+            .swiper-wrapper {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            .swiper-slide {
+                flex-shrink: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        // Swiper navigation
+        .swiper-button-prev,
+        .swiper-button-next {
+            appearance: none;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+            background-size: 100% 200%;
+            background-repeat: no-repeat;
+            background-position: top center;
+            transition: background-position 0.25s ease;
+            color: transparent;
+
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                background-position: bottom center;
+            }
+        }
+
+        .swiper-button-prev {
+            background-image: url('/storage/images/slider/Left.jpg');
+        }
+
+        .swiper-button-next {
+            background-image: url('/storage/images/slider/Right.jpg');
+        }
+
+        .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.6);
+            opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: $white;
+        }
+    }
+
+    // ——— NEWS PANEL ———
+    .block_3_news {
+        flex: 0 0 $block3-news-width;
+        background: $bgLight;
+        border: 1px solid $borderLine;
+        border-radius: 12px;
+        padding: 10px 3px;
+        height: $block3-height;
+
+        .scroll-block {
+            height: 400px;
+            padding: 10px 14px 16px 14px;
+            overflow-y: auto;
+        }
+
+        .bl_one_new {
+            padding: 6px 0;
+
+            .teaser_title_600 h4 {
+                font-size: 18px;
+                font-weight: 600;
+                margin: 0 0 4px;
+
+                a {
+                    color: $colorGrey;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $colorRed;
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            .teaser_shortdesc .desc_p {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                font-size: 17px;
+                line-height: 1.5;
+                color: $color;
+                text-decoration: none;
+
+                &:hover {
+                    color: $colorRed;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .new_line {
+            height: 1px;
+            background: $borderMuted;
+            margin: 8px 0;
+        }
+    }
+}
+
+// ——— RESPONSIVE ———
+@media (max-width: 1278px) {
+    .block_3 {
+        .flex_3 {
+            gap: 20px;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .block_3 {
+        .flex_3 {
+            flex-direction: column;
+        }
+
+        .block_3_slider .block3-swiper {
+            height: 380px;
+            max-width: 1000px;
+            border-radius: 12px;
+            img {
+                border-radius: 12px;
+            }
+        }
+
+        .block_3_slider .o_left h2 {
+            font-size: 22px;
+        }
+
+        .block_3_news {
+            flex: unset;
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid $borderLine;
+            height: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            .scroll-block {
+                height: 280px;
+            }
+        }
+    }
+}
+
+

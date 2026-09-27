@@ -1,0 +1,41 @@
+@import 'pagination.scss';
+@import 'general-style/paddind.scss';
+@import 'general-style/width.scss';
+/*@import '@fontsource-variable/source-sans-3';
+@import '@fontsource-variable/roboto/wdth.css';*/
+/* Основной шрифт сайта. Прежний Source Sans Pro оставлен закомментированным —
+   чтобы вернуться, достаточно поменять импорт и $fontBody в _variables.scss */
+/*@import '@fontsource/source-sans-pro';*/
+@import '@fontsource-variable/montserrat';
+@import 'fancybox/fancubox6.scss';
+@import 'message/flach_message.scss';
+@import 'loader_map.css';
+@import 'trix/trix.scss';
+@import 'components/modules/banner.scss';
+@import 'components/modules/programs.scss';
+@import 'components/modules/slider.scss';
+@import 'components/modules/schedule.scss';
+@import 'components/modules/advantages.scss';
+@import 'components/modules/consulting.scss';
+@import 'components/modules/actions_script.scss';
+@import 'components/modules/faq.scss';
+@import 'components/modules/bp-calendar.scss';
+@import 'pages/auth.scss';
+@import 'pages/cabinet.scss';
+@import 'components/form/form-loader.scss';
+@import 'components/form/form-input.scss';
+@import 'components/form/form-blue-component.scss';
+@import 'buttons/buttons.scss';
+@import 'templates/axeld/breadcrumbs.scss';
+@import 'templates/axeld/common/pages/default.scss';
+@import 'templates/axeld/common/resources/full/default.scss';
+@import 'templates/axeld/common/resources/full/full.scss';
+@import 'templates/axeld/common/resources/teaser/default.scss';
+@import 'templates/axeld/common/resources/teaser/default.scss';
+@import 'templates/axeld/breadcrumbs.scss';
+@import 'templates/axeld/content.scss';
+@import 'templates/axeld/header.scss';
+@import 'templates/axeld/city-selector.scss';
+@import 'templates/axeld/footer.scss';
+@import 'style.scss';
+

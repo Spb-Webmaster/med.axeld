@@ -1,0 +1,184 @@
+.block_3 {
+  width: 100%;
+  overflow: hidden;
+  padding: 30px 0;
+}
+.block_3 .scroll-block {
+  height: 387px;
+  width: 100%;
+  overflow-y: scroll;
+}
+.block_3 .scroll-block::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+.block_3 .scroll-block::-webkit-scrollbar {
+  width: 4px;
+}
+.block_3 .scroll-block::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #E0E0E0;
+  position: relative;
+  right: -10px;
+}
+.block_3 .scroll-block:hover::-webkit-scrollbar-thumb {
+  background: #EF533F;
+}
+.block_3 .swiper-slide {
+  background: #ccc;
+}
+.block_3 .swiper-slide a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.block_3 .swiper-slide a span {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.block_3 .flex_3 {
+  display: flex;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.block_3 .block_3_slider {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+}
+.block_3 .block_3_slider .block3-swiper {
+  width: 100%;
+  max-width: 795px;
+  height: 420px;
+  overflow: hidden;
+}
+.block_3 .block_3_slider .block3-swiper .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.block_3 .block_3_slider .block3-swiper .swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+}
+.block_3 .block_3_slider .swiper-button-prev,
+.block_3 .block_3_slider .swiper-button-next {
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  transition: background-position 0.25s ease;
+  color: transparent;
+}
+.block_3 .block_3_slider .swiper-button-prev::after,
+.block_3 .block_3_slider .swiper-button-next::after {
+  display: none;
+}
+.block_3 .block_3_slider .swiper-button-prev:hover,
+.block_3 .block_3_slider .swiper-button-next:hover {
+  background-position: bottom center;
+}
+.block_3 .block_3_slider .swiper-button-prev {
+  background-image: url("/storage/images/slider/Left.jpg");
+}
+.block_3 .block_3_slider .swiper-button-next {
+  background-image: url("/storage/images/slider/Right.jpg");
+}
+.block_3 .block_3_slider .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+.block_3 .block_3_slider .swiper-pagination-bullet-active {
+  background: #fff;
+}
+.block_3 .block_3_news {
+  flex: 0 0 367px;
+  background: #f5f5f7;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 10px 3px;
+  height: 420px;
+}
+.block_3 .block_3_news .scroll-block {
+  height: 400px;
+  padding: 10px 14px 16px 14px;
+  overflow-y: auto;
+}
+.block_3 .block_3_news .bl_one_new {
+  padding: 6px 0;
+}
+.block_3 .block_3_news .bl_one_new .teaser_title_600 h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+.block_3 .block_3_news .bl_one_new .teaser_title_600 h4 a {
+  color: #667085;
+  text-decoration: none;
+}
+.block_3 .block_3_news .bl_one_new .teaser_title_600 h4 a:hover {
+  color: #EF533F;
+  text-decoration: none;
+}
+.block_3 .block_3_news .bl_one_new .teaser_shortdesc .desc_p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #282828;
+  text-decoration: none;
+}
+.block_3 .block_3_news .bl_one_new .teaser_shortdesc .desc_p:hover {
+  color: #EF533F;
+  text-decoration: none;
+}
+.block_3 .block_3_news .new_line {
+  height: 1px;
+  background: #dedede;
+  margin: 8px 0;
+}
+
+@media (max-width: 1278px) {
+  .block_3 .flex_3 {
+    gap: 20px;
+  }
+}
+@media (max-width: 900px) {
+  .block_3 .flex_3 {
+    flex-direction: column;
+  }
+  .block_3 .block_3_slider .block3-swiper {
+    height: 380px;
+    max-width: 1000px;
+    border-radius: 12px;
+  }
+  .block_3 .block_3_slider .block3-swiper img {
+    border-radius: 12px;
+  }
+  .block_3 .block_3_slider .o_left h2 {
+    font-size: 22px;
+  }
+  .block_3 .block_3_news {
+    flex: unset;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e5e5e5;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .block_3 .block_3_news .scroll-block {
+    height: 280px;
+  }
+}
+
+/*# sourceMappingURL=slider.css.map */

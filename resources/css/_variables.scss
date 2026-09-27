@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+// ============================================================
+// ЕДИНАЯ ТАБЛИЦА ПЕРЕМЕННЫХ
+// ============================================================
+// Vite компилирует каждый @import-нутый .scss-партиал из app.css как
+// независимый Sass-модуль, поэтому одного импорта этого файла в app.css
+// недостаточно — КАЖДЫЙ .scss-файл, использующий переменные отсюда,
+// обязан сам сделать @import 'variables' (с верным относительным путём)
+// в самом начале. Не объявляйте $color/$colorX и т.п. локально в других
+// файлах — добавляйте новый цвет сюда и ссылайтесь на переменную.
+//
+// Внимание: в значениях CSS-переменных (--foo) Sass не подставляет $-переменные
+// сам — писать нужно через интерполяцию: --foo: #{$white};
+// ============================================================
+
+// --- Нейтральные ---
+$white:          #ffffff;
+$black:          #000000;
+
+// --- Базовая палитра (была продублирована в 8 файлах) ---
+$color:          #282828;
+$colorRed:       #EF533F;
+$colorCCC:       #CCCCCC;
+$colorGrey:      #667085;
+$colorBlue:      #095C9A;
+$colorBlueDark:  #002775; // тёмно-синий акцент
+$colorBlue2:     #03a9f4;
+$colorGreen:     #0f6567;
+$colorYellow:    #FF931E;
+$colorOrange:    #FF732C;
+$colorIndigo:    #575EEF;
+
+// --- Дополнительные оттенки текста ---
+$colorDarkGrey:  #383838; // тёмная плашка программы
+$colorGreyBlue:  #6f7893; // подписи в блоке преимуществ
+$colorGreyMuted: #9e9e9e; // неактивная кнопка
+
+// --- Фоны ---
+$bgLight:      #f5f5f7; // светлая подложка секций
+$bgWarmLight:  #f6f5f4; // тёплая подложка (консультации)
+$bgGreyLight:  #ebebed; // серая подложка
+$bgBlueLight:  #cbdaed; // подсветка в тексте страницы
+$bgRedLight:   #fff5f4; // подложка ошибки в fancybox
+
+// --- Рамки и разделители (от светлых к тёмным) ---
+$borderSubtle: #f0f0f0;
+$borderLight:  #e8e8e8;
+$borderLine:   #e5e5e5;
+$borderSoft:   #E6E0EC;
+$borderInput:  #E0E0E0;
+$borderMuted:  #dedede;
+$borderThin:   #ddd;
+$borderHover:  #bbb;
+
+// --- Акценты ---
+$colorGreenLight: #43D38B; // кнопка «успех», активные ссылки
+$colorGreenDark:  #2F6E4D; // кнопка «успех» при наведении
+$colorHighlight:  #ffe135; // жёлтая подсветка в расписании
+
+// --- Плашки программ (components/modules/programs.scss) ---
+$badgeGreen:  #0e913d;
+$badgeOrange: #ff9341;
+$badgeBlue:   #296dbd;
+$badgeRed:    #ff3b30;
+
+// --- Кнопки блока «Действия» (components/modules/actions_script.scss) ---
+$actionBlue:  #16a2e0;
+$actionGreen: #0ba354;
+$actionRed:   #f14635;
+
+// --- Градиент в блоке преимуществ ---
+$gradientBlue:  #dbe6ff;
+$gradientPeach: #f8e1d9;
+
+// --- Flash-сообщения ---
+$flashSuccessBg:   #d1e7dd;
+$flashSuccessText: #0f5132;
+$flashErrorBg:     #f8d7da;
+$flashErrorText:   #842029;
+
+// --- Календарь дневника давления (components/modules/bp-calendar.scss) ---
+$calBorder:       #e2e5ea;
+$calBorderStrong: #8f98a3;
+$calText:         #1f2328;
+$calMuted:        #6b7280;
+$calFaint:        #a3aab3;
+$calEmpty:        #eceef1;
+$calHover:        #f0f2f5;
+$calScrollThumb:  #d6dae0;
+$calWeekend:      #8a94a1;
+
+// --- Header / Menu ---
+$headerTopbarBg:     $black;
+$headerLangColor:    #8a8f98;
+$headerLogoBg:       #e52423;
+$headerContactLabel: #c7c9cf;
+$headerCabinetText:  #1a1a1a;
+$menuActiveBg:       #4b4b4b;
+
+// --- Личный кабинет и формы входа ---
+$cabBg:        #f4f6f9; // фон страницы кабинета
+$cabCardBg:    $white;
+$cabBorder:    #e3e8ef;
+$cabMuted:     #6b7688; // подписи полей и подсказки
+$cabNavActive: $colorBlue;
+$cabDanger:    #b42318; // ошибки валидации
+
+// --- Шрифты ---
+// Пакеты подключаются в app.css. Montserrat — переменного начертания,
+// один файл на все веса от 100 до 900, кириллица в комплекте.
+$fontBody:    'Montserrat Variable', 'Segoe UI', Arial, sans-serif;
+$fontHeading: $fontBody;
+
+// --- Кнопки (buttons/buttons.scss) ---
+// Гамма сайта — синий и красный. Роли разведены: синий — основное действие,
+// красный — призыв к действию и всё необратимое (удаление, выход).
+//
+// Заливки взяты темнее фирменных $colorBlue/$colorRed намеренно: белый текст
+// на #EF533F даёт контраст 3.4:1 и не проходит WCAG AA, на $btnAccentBg — 4.6:1.
+// Сами $colorBlue/$colorRed остаются для рамок и акцентов на белом.
+$btnPrimaryBg:     $colorBlue;
+$btnPrimaryHover:  #074C80;
+$btnPrimaryActive: #063C66;
+$btnPrimaryTint:   #EAF1F7; // светлая подложка при наведении на контурную
+
+$btnAccentBg:      #D93B24;
+$btnAccentHover:   #BE3320;
+$btnAccentActive:  #A32B1B;
+$btnAccentText:    #C2331F; // красный текст на белом: контраст 5.5:1
+
+$btnMutedBg:       #6B7688;
+$btnMutedHover:    #59636F;
+
+$btnRadius:        10px;
+$btnHeight:        46px;
+$btnHeightSm:      36px;
+$btnHeightLg:      54px;
+$btnRoundSize:     44px; // круглая иконочная кнопка
+
+// --- Layout ---
+$containerWidth: 1312px;
+$maxWidth:       1200; // база для миксина adaptiv-font
+$maxWidthWide:   1440; // та же база в «широких» партиалах

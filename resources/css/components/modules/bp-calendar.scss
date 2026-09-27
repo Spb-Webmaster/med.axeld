@@ -1,0 +1,717 @@
+@import '../../variables';
+// =============================================
+// Дневник давления — календарь (год → месяц)
+// Разметка: resources/views/components/calendar/bp-calendar.blade.php
+// Логика:   resources/js/include/site/bp-calendar.js
+// =============================================
+
+:root {
+    --bpc-card: #{$white};
+    --bpc-border: #{$calBorder};
+    --bpc-border-strong: #{$calBorderStrong};
+    --bpc-text: #{$calText};
+    --bpc-muted: #{$calMuted};
+    --bpc-faint: #{$calFaint};
+    --bpc-empty: #{$calEmpty};
+    --bpc-accent: #{$colorBlue};
+    --bpc-radius: 12px;
+    --bpc-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.bp-calendar {
+    padding: 32px 0 48px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--bpc-text);
+
+    :is(button, [tabindex]):focus-visible {
+        outline: 2px solid var(--bpc-accent);
+        outline-offset: 2px;
+    }
+}
+
+// ——— Заголовок блока ———
+.bp-calendar__heading {
+    margin: 0 0 24px;
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 600;
+    text-align: center;
+    color: $color;
+
+    @media (max-width: 640px) {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+}
+
+// ——— Шапка: год, лента годов, легенда ———
+.bp-calendar__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.bp-calendar__yearnav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bp-calendar__year {
+    min-width: 4.4ch;
+    font-size: clamp(40px, 6vw, 60px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+// Лента годов — горизонтальная прокрутка
+.bp-calendar__years {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 4px 2px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: $calScrollThumb;
+    }
+}
+
+// Общий вид пилюли даёт .btn-pill (buttons/buttons.scss),
+// здесь — только точка у текущего года
+.bp-calendar__year-chip.is-current::after {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: middle;
+}
+
+.bp-calendar__hint {
+    margin: 0;
+    max-width: 640px;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+    color: $cabMuted;
+
+    a {
+        color: $colorBlue;
+    }
+}
+
+// ——— Легенда ———
+.bp-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 22px;
+    font-size: 13px;
+    color: var(--bpc-muted);
+}
+
+.bp-legend__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bp-legend__swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background: var(--bpc-empty);
+    border: 1px solid var(--bpc-border);
+}
+
+.bp-legend__scale {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bp-legend__bar {
+    height: 12px;
+    width: 220px;
+    border-radius: 6px;
+    border: 1px solid var(--bpc-border);
+}
+
+.bp-legend__ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.bp-legend__note {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: var(--bpc-faint);
+}
+
+// ——— Сетка месяцев ———
+.bp-calendar__months {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bp-month {
+    padding: 14px 14px 16px;
+    background: var(--bpc-card);
+    border: 1px solid var(--bpc-border);
+    border-radius: var(--bpc-radius);
+    box-shadow: var(--bpc-shadow);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    &:hover {
+        border-color: var(--bpc-border-strong);
+        box-shadow: 0 4px 14px rgba(16, 24, 40, 0.08);
+    }
+
+    &:has(.bp-month__title:focus-visible) {
+        border-color: var(--bpc-accent);
+        box-shadow: 0 0 0 3px rgba(9, 92, 154, 0.25);
+    }
+}
+
+.bp-month__title {
+    display: block;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 2px 4px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+.bp-month__weekdays,
+.bp-month__days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+}
+
+.bp-month__weekdays {
+    margin-bottom: 4px;
+
+    span {
+        font-size: 11px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--bpc-faint);
+
+        &:nth-child(n + 6) {
+            color: $calWeekend;
+        }
+    }
+}
+
+.bp-day {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    transition: transform 0.12s, box-shadow 0.12s;
+
+    &.is-blank {
+        visibility: hidden;
+    }
+
+    &.is-empty {
+        background: var(--bpc-empty);
+        color: var(--bpc-faint);
+    }
+
+    &.is-filled {
+        border-color: var(--bpc-border-strong);
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            transform: scale(1.12);
+            box-shadow: 0 2px 8px rgba(16, 24, 40, 0.2);
+            z-index: 1;
+        }
+    }
+
+    // Будущий день отмечать нельзя — приглушаем его
+    &.is-future.is-empty {
+        background: transparent;
+        color: $borderThin;
+    }
+
+    &.is-today {
+        box-shadow: inset 0 0 0 2px rgba(9, 92, 154, 0.55);
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 3px;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.9;
+        }
+
+        &.is-empty::after {
+            background: var(--bpc-accent);
+            opacity: 1;
+        }
+    }
+}
+
+// ——— Подсказка ———
+.bp-tooltip {
+    position: fixed;
+    z-index: 50;
+    max-width: 240px;
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: $calText;
+    color: $white;
+    font-size: 13px;
+    line-height: 1.35;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.12s, transform 0.12s;
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    strong {
+        display: block;
+        margin-bottom: 2px;
+        font-weight: 600;
+    }
+}
+
+// ——— Модальное окно месяца ———
+.bp-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.bp-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.45);
+}
+
+.bp-modal__dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(1100px, 100%);
+    max-height: 100%;
+    overflow: hidden;
+    background: var(--bpc-card);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    color: var(--bpc-text);
+
+    :is(button, [tabindex]):focus-visible {
+        outline: 2px solid var(--bpc-accent);
+        outline-offset: 2px;
+    }
+}
+
+.bp-modal__header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--bpc-border);
+}
+
+.bp-modal__title {
+    flex: 1;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+.bp-modal__body {
+    padding: 16px 20px 20px;
+    overflow: auto;
+}
+
+// ——— Большая сетка месяца ———
+.bp-bigcal {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 6px;
+
+    th {
+        padding: 4px 0 6px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--bpc-muted);
+
+        &:nth-child(n + 6) {
+            color: $calWeekend;
+        }
+    }
+
+    td {
+        padding: 0;
+        height: 104px;
+        vertical-align: top;
+    }
+}
+
+.bp-bigcal__cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    height: 100%;
+    min-height: 104px;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    &.is-empty {
+        background: var(--bpc-empty);
+        color: var(--bpc-faint);
+
+        .bp-bigcal__num {
+            font-weight: 500;
+        }
+    }
+
+    &.is-filled {
+        border-color: var(--bpc-border-strong);
+    }
+
+    // Кликабельный день: его видно по курсору и подсветке
+    &.is-editable {
+        cursor: pointer;
+        transition: border-color .15s, box-shadow .15s, transform .12s;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $colorBlue;
+            box-shadow: 0 4px 14px rgba(16, 24, 40, .14);
+        }
+
+        &:focus-visible {
+            outline: 2px solid $colorBlue;
+            outline-offset: 2px;
+        }
+    }
+
+    // Будущий день: ни клика, ни фокуса
+    &.is-future {
+        background: transparent;
+        border-color: $calBorder;
+        border-style: dashed;
+        color: $borderThin;
+        cursor: default;
+    }
+
+    &.is-today .bp-bigcal__num::after {
+        content: "сегодня";
+        margin-left: 6px;
+        padding: 1px 6px;
+        border-radius: 999px;
+        background: var(--bpc-accent);
+        color: $white;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        vertical-align: middle;
+    }
+}
+
+.bp-bigcal__num {
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.bp-bigcal__bp {
+    margin-top: 4px;
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+}
+
+.bp-bigcal__unit {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.bp-bigcal__pulse,
+.bp-bigcal__none {
+    margin-top: auto;
+    font-size: 12px;
+}
+
+.bp-bigcal__pulse {
+    opacity: 0.9;
+}
+
+// ——— Форма замера за день ———
+.bp-entry {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.bp-entry__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, .5);
+}
+
+.bp-entry__form {
+    position: relative;
+    width: min(420px, 100%);
+    padding: 22px 24px 20px;
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba($black, .3);
+    color: $calText;
+
+    &.is-busy {
+        opacity: .6;
+        pointer-events: none;
+    }
+}
+
+.bp-entry__title {
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.bp-entry__fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.bp-entry__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    span {
+        font-size: 13px;
+        color: $cabMuted;
+    }
+
+    input {
+        width: 100%;
+        height: 46px;
+        padding: 0 10px;
+        border: 1px solid $borderInput;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 18px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        text-align: center;
+        appearance: textfield;
+
+        &:focus {
+            outline: none;
+            border-color: $colorBlue;
+            box-shadow: 0 0 0 3px rgba(9, 92, 154, .15);
+        }
+
+        // Стрелки поля number сбивают набор с клавиатуры на узких экранах
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+    }
+}
+
+.bp-entry__units {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: $calFaint;
+}
+
+.bp-entry__error {
+    margin-top: 12px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: $flashErrorBg;
+    color: $flashErrorText;
+    font-size: 13px;
+    line-height: 1.4;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.bp-entry__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.bp-entry__delete {
+    margin-left: auto;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .bp-modal {
+        padding: 0;
+    }
+
+    .bp-modal__dialog {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .bp-modal__header {
+        gap: 2px;
+        padding: 12px 8px;
+
+        // Размер круглых кнопок — переменная из buttons/buttons.scss
+        --btn-round-size: 34px;
+    }
+
+    .bp-modal__title {
+        font-size: 16px;
+    }
+
+    .bp-modal__body {
+        padding: 10px;
+    }
+
+    .bp-bigcal {
+        border-spacing: 3px;
+
+        th {
+            font-size: 10px;
+        }
+
+        td {
+            height: 84px;
+        }
+    }
+
+    .bp-bigcal__cell {
+        min-height: 84px;
+        padding: 5px 4px;
+        border-radius: 8px;
+
+        &.is-today .bp-bigcal__num::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-left: 4px;
+            padding: 0;
+            border-radius: 50%;
+        }
+    }
+
+    .bp-bigcal__num {
+        font-size: 11px;
+    }
+
+    .bp-bigcal__bp {
+        font-size: 14px;
+    }
+
+    .bp-bigcal__unit {
+        font-size: 8px;
+    }
+
+    .bp-bigcal__pulse,
+    .bp-bigcal__none {
+        font-size: 9px;
+    }
+}

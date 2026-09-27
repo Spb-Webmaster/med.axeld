@@ -1,0 +1,55 @@
+.breadcrumbs {
+  position: relative;
+  padding: 20px 0;
+  min-height: 59px;
+}
+.breadcrumbs ul li {
+  list-style-type: none;
+  display: inline-block;
+  color: #667085;
+  text-decoration: none;
+  font-size: 15px;
+  position: relative;
+}
+.breadcrumbs ul li a, .breadcrumbs ul li span {
+  color: #667085;
+  text-decoration: none;
+  font-size: 15px;
+  position: relative;
+  padding: 0 4px;
+  display: inline-block;
+}
+.breadcrumbs ul li a:hover {
+  text-decoration: underline;
+}
+.breadcrumbs ul li:first-child a {
+  padding-left: 0;
+}
+
+@media screen and (max-width: 740px) {
+  .breadcrumbs {
+    padding: 5px 0 16px 0;
+    min-height: 0;
+  }
+  .breadcrumbs ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .breadcrumbs ul li {
+    display: block;
+    font-size: 14px;
+  }
+  .breadcrumbs ul li a, .breadcrumbs ul li span {
+    padding: 2px 5px 2px 6px;
+  }
+  .breadcrumbs ul li a {
+    text-decoration: underline;
+  }
+}
+@media screen and (max-width: 568px) {
+  .breadcrumbs ul li a, .breadcrumbs ul li span {
+    padding: 2px 5px 2px 0;
+  }
+}
+
+/*# sourceMappingURL=breadcrumbs.css.map */
