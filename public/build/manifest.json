@@ -1,0 +1,47 @@
+{
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2": {
+    "file": "assets/montserrat-cyrillic-ext-wght-normal-CO5hGrJv.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-wght-normal.woff2": {
+    "file": "assets/montserrat-cyrillic-wght-normal-EAA9jha_.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-ext-wght-normal.woff2": {
+    "file": "assets/montserrat-latin-ext-wght-normal-BsZE-iaG.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2": {
+    "file": "assets/montserrat-latin-wght-normal-l_AIctKy.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2": {
+    "file": "assets/montserrat-vietnamese-wght-normal-k7S-YeeD.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CwQjeA3G.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "assets": [
+      "assets/montserrat-cyrillic-ext-wght-normal-CO5hGrJv.woff2",
+      "assets/montserrat-cyrillic-wght-normal-EAA9jha_.woff2",
+      "assets/montserrat-vietnamese-wght-normal-k7S-YeeD.woff2",
+      "assets/montserrat-latin-ext-wght-normal-BsZE-iaG.woff2",
+      "assets/montserrat-latin-wght-normal-l_AIctKy.woff2"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-COOJwVtK.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-W25s0U6_.css"
+    ]
+  }
+}
