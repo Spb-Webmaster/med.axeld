@@ -1,0 +1,40 @@
+# Корень проекта на Beget.
+#
+# Document root у виртуального хостинга поменять нельзя — это всегда public_html,
+# а SSH-пользователь заперт в нём же (~ == public_html). Поэтому проект лежит
+# в public_html целиком, а этот файл направляет запросы в public/index.php
+# и закрывает доступ ко всему служебному.
+#
+# Полная инструкция — docs/deploy-beget.md
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    Options +FollowSymLinks
+
+    # Публичные медиафайлы через storage:link (public/storage → storage/app/public)
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L,QSA]
+
+    # Публичные ассеты пакетов (MoonShine, TinyMCE и др.)
+    RewriteRule ^vendor/(.*)$ public/vendor/$1 [L,QSA]
+
+    # Служебные файлы и каталоги наружу не отдаём
+    RewriteRule ^\.env - [F,L]
+    RewriteRule ^artisan - [F,L]
+    RewriteRule ^composer\.(json|lock)$ - [F,L]
+    RewriteRule ^package(-lock)?\.json$ - [F,L]
+    RewriteRule ^phpunit\.xml$ - [F,L]
+    RewriteRule ^vite\.config\.js$ - [F,L]
+    RewriteRule ^composer2\.phar$ - [F,L]
+    RewriteRule ^(app|bootstrap|config|database|lang|resources|routes|src|storage|vendor|tests|docs)(/|$) - [F,L]
+
+    # Статика из public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
+    RewriteRule ^(.+)$ public/$1 [L,QSA]
+
+    # Всё остальное — в Laravel.
+    # Условие !-d здесь намеренно отсутствует: с ним Apache отдаёт 403
+    # на корневой URL, потому что public_html — существующий каталог.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ public/index.php [L,QSA]
+</IfModule>

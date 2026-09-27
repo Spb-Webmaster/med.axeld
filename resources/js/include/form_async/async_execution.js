@@ -2,12 +2,16 @@ import {axiosLaravel} from '../axios/axiosLaravel.js'
 import {fieldErrors} from '../fancybox/form/fieldErrors.js'
 import {removeErrors} from "../fancybox/form/removeErrors.js";
 import {imask} from "../imask.js";
+import {mzSelectInit} from "../select/mz-select.js";
 
 export function asyncExecution() {
 
 
     /** подключим маски **/
     imask()
+
+    /** оформим выпадающие списки во вставленной разметке **/
+    mzSelectInit()
 
 
     const appFormButtons = Array.from(document.querySelectorAll('.app_form_button'))

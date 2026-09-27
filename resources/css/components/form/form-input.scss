@@ -23,9 +23,9 @@
 
     .input-group__input {
         width: 100%;
-        height: 50px;
+        height: $fieldHeight;
         border: 1px solid $borderInput;
-        border-radius: 3px;
+        border-radius: $fieldRadius;
         padding: 0 10px;
         appearance: none;
         cursor: auto !important;

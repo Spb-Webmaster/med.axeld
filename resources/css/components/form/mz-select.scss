@@ -1,0 +1,197 @@
+@charset "utf-8";
+@import '../../variables';
+
+// ============================================================
+// MZ-SELECT — стилизованный список поверх нативного <select>
+// Разметку строит resources/js/include/select/mz-select.js
+// Компонент: resources/views/components/form/select.blade.php
+// ============================================================
+// Размеры совпадают с обычным полем ввода (.input-group__input),
+// чтобы select и input в одной форме стояли вровень.
+// ============================================================
+
+.mz-select {
+    position: relative;
+    width: 100%;
+    font-family: inherit;
+
+    /*
+     | Нативный select прячем прозрачностью, а не clip-path и не display:none.
+     | Он должен остаться видимым для браузера и занимать место кнопки: иначе
+     | подсказка нативной проверки required цепляется к полю размером 2x2 px
+     | где-то в углу, и пользователь не понимает, почему форма не отправляется.
+     | pointer-events отключаем, чтобы клики доставались кнопке поверх.
+     */
+    select {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+// ——— Подпись над полем ———
+// Плавающая подпись, как у .input-group, здесь не годится: у списка
+// значение есть всегда, и ей некуда «всплывать».
+.mz-select__label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: $colorGrey;
+
+    span {
+        color: $colorRed;
+    }
+}
+
+// ——— Кнопка, заменяющая select ———
+.mz-select__trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: $fieldHeight;
+    padding: 8px 40px 8px 10px;
+    border: 1px solid $borderInput;
+    border-radius: $fieldRadius;
+    background: $white;
+    color: $cabMuted;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+
+    // Стрелка
+    &::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        transform: translateY(-50%);
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="%236b7688" d="M7 10l5 5 5-5z"/></svg>') center / 20px no-repeat;
+        transition: transform .2s;
+        pointer-events: none;
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-color: $colorBlue;
+        box-shadow: 0 0 0 3px rgba($colorBlue, .2);
+    }
+}
+
+// Открыт — стрелка вверх, рамка акцентная
+.mz-select.is-open .mz-select__trigger {
+    border-color: $colorBlue;
+
+    &::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+}
+
+// Выбрано реальное значение (не заглушка) — текст становится основным
+.mz-select.has-value .mz-select__trigger {
+    color: $color;
+}
+
+// ——— Выпадающий список ———
+.mz-select__dropdown {
+    position: absolute;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    max-height: 240px;
+    margin: 0;
+    padding: 6px 0;
+    overflow-y: auto;
+    list-style: none;
+    background: $white;
+    border: 1px solid $borderInput;
+    border-radius: $fieldRadius;
+    box-shadow: 0 12px 32px rgba($black, .12);
+    opacity: 0;
+    visibility: hidden;
+    /*
+     | Анимируем только прозрачность. Из-за transform Chrome выносит список
+     | на отдельный слой и отключает субпиксельное сглаживание — текст плывёт.
+     */
+    transition: opacity .18s, visibility .18s;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: $white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background: $bgGreyLight;
+    }
+}
+
+.mz-select.is-open .mz-select__dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+// Снизу не хватило места — список раскрывается вверх (класс ставит скрипт)
+.mz-select.drop-up .mz-select__dropdown {
+    top: auto;
+    bottom: calc(100% + 6px);
+}
+
+// ——— Пункты ———
+.mz-select__option {
+    padding: 10px 12px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: $color;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+
+    // is-active — пункт под стрелками клавиатуры, ведёт себя как наведение
+    &:hover,
+    &.is-active {
+        background: rgba($colorBlue, .07);
+        color: $colorBlue;
+    }
+
+    &.is-selected {
+        background: $colorBlue;
+        color: $white;
+
+        &:hover {
+            background: $btnPrimaryHover;
+        }
+    }
+
+    &.is-disabled {
+        background: transparent;
+        color: rgba($color, .35);
+        cursor: default;
+
+        &.is-active,
+        &.is-selected {
+            background: rgba($color, .04);
+            color: rgba($color, .35);
+        }
+    }
+}
+
+// ——— Состояния поля ———
+.mz-select.is-disabled {
+    opacity: .55;
+    pointer-events: none;
+}
+
+// Ошибку ставит серверная проверка — см. select.blade.php
+.mz-select._error .mz-select__trigger {
+    border-color: $colorRed;
+
+    &:focus-visible {
+        box-shadow: 0 0 0 3px rgba($colorRed, .25);
+    }
+}

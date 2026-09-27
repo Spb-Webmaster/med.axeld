@@ -20,7 +20,7 @@
     "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CwQjeA3G.css",
+    "file": "assets/app-Bc72AVZN.css",
     "name": "app",
     "names": [
       "app.css"
@@ -36,7 +36,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-COOJwVtK.js",
+    "file": "assets/app-B6lVPS9g.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

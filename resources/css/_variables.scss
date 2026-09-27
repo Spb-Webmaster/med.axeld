@@ -112,6 +112,12 @@ $cabDanger:    #b42318; // ошибки валидации
 $fontBody:    'Montserrat Variable', 'Segoe UI', Arial, sans-serif;
 $fontHeading: $fontBody;
 
+// --- Поля формы ---
+// Общие для input (components/form/form-input.scss) и для списка
+// (components/form/mz-select.scss) — иначе они встают не вровень.
+$fieldHeight: 50px;
+$fieldRadius: 3px;
+
 // --- Кнопки (buttons/buttons.scss) ---
 // Гамма сайта — синий и красный. Роли разведены: синий — основное действие,
 // красный — призыв к действию и всё необратимое (удаление, выход).

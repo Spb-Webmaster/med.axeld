@@ -24,6 +24,7 @@
 @import 'pages/cabinet.scss';
 @import 'components/form/form-loader.scss';
 @import 'components/form/form-input.scss';
+@import 'components/form/mz-select.scss';
 @import 'components/form/form-blue-component.scss';
 @import 'buttons/buttons.scss';
 @import 'templates/axeld/breadcrumbs.scss';

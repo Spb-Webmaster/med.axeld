@@ -12,6 +12,7 @@ import {trix} from "./include/editor/trix";
 import {faqAccordion} from "./include/site/faq";
 import {citySelector} from "./include/site/city-selector";
 import {bpCalendar} from "./include/site/bp-calendar";
+import {mzSelect} from "./include/select/mz-select";
 
 
 
@@ -28,4 +29,5 @@ document.addEventListener('DOMContentLoaded', function () {
     faqAccordion() // FAQ аккордеон
     citySelector() // выбор города
     bpCalendar() // календарь дневника давления
+    mzSelect() // стилизованные выпадающие списки
 });

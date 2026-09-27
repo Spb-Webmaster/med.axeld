@@ -1,0 +1,164 @@
+name: Deploy (Beget production)
+
+# Продакшн med.axeld.ru на виртуальном хостинге Beget.
+# Push в master деплоит автоматически, workflow_dispatch — ручной запуск.
+#
+# Секреты и первичная настройка сервера — docs/deploy-beget.md
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Beget при частых подключениях временно отклоняет SSH (connection refused),
+# поэтому параллельные деплои не запускаем: новый пуш отменяет предыдущий прогон.
+concurrency:
+  group: deploy-beget-prod
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Собираем здесь, а не полагаемся на public/build из репозитория:
+      # так на сервер уедет сборка ровно из этого коммита, даже если
+      # локально её забыли обновить перед пушем.
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.BEGET_PROD_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          # helper: повторяет команду, пока Beget не пустит (5 попыток с паузой)
+          cat > ~/retry.sh << 'EOF'
+          #!/usr/bin/env bash
+          attempt=1
+          max=5
+          until "$@"; do
+            code=$?
+            if [ "$attempt" -ge "$max" ]; then
+              echo "Не удалось выполнить после $max попыток (код $code)."
+              exit "$code"
+            fi
+            echo "Попытка $attempt из $max не удалась (код $code), повтор через 30 с..."
+            attempt=$((attempt + 1))
+            sleep 30
+          done
+          EOF
+          chmod +x ~/retry.sh
+
+      - name: Verify deploy target path
+        # Домашняя директория SSH-пользователя должна быть строго public_html
+        # сайта. Проверяем это ДО rsync, потому что rsync ниже идёт с --delete:
+        # если домашняя папка окажется другой (например, родительской для домена),
+        # --delete молча снесёт там всё, чего нет в репозитории.
+        #
+        # Путь взят по аналогии с соседним проектом на этом же аккаунте и живым
+        # подключением НЕ подтверждён. Если шаг упадёт с расхождением — впишите
+        # сюда путь, который вывел pwd, это не ошибка деплоя.
+        env:
+          SSH_HOST: ${{ secrets.BEGET_PROD_SSH_HOST }}
+          SSH_USER: ${{ secrets.BEGET_PROD_SSH_USER }}
+        run: |
+          ~/retry.sh ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=20 \
+            "$SSH_USER@$SSH_HOST" '
+              set -e
+              EXPECTED="/home/a/axeld1975/med.axeld.ru/public_html"
+              ACTUAL="$(pwd)"
+              if [ "$ACTUAL" != "$EXPECTED" ]; then
+                echo "Ожидался путь: $EXPECTED"
+                echo "Реальный путь: $ACTUAL"
+                echo "Расхождение! Останавливаю деплой, чтобы не залить файлы не туда."
+                exit 1
+              fi
+              echo "Путь подтверждён: $ACTUAL"
+            '
+
+      - name: Deploy files via rsync
+        env:
+          SSH_HOST: ${{ secrets.BEGET_PROD_SSH_HOST }}
+          SSH_USER: ${{ secrets.BEGET_PROD_SSH_USER }}
+        run: |
+          # --no-perms и компания: Beget не даёт менять владельца и права,
+          # без этих флагов rsync падает с кодом 23
+          ~/retry.sh rsync -rltz --delete \
+            --no-perms --no-owner --no-group --omit-dir-times \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.ssh' \
+            --exclude='.cache' \
+            --exclude='composer2.phar' \
+            --exclude='node_modules' \
+            --exclude='.env' \
+            --exclude='.env.production' \
+            --exclude='.ai' \
+            --exclude='.claude' \
+            --exclude='.idea' \
+            --exclude='.osp' \
+            --exclude='.editorconfig' \
+            --exclude='.npmrc' \
+            --exclude='README.md' \
+            --exclude='boost.json' \
+            --exclude='phpunit.xml' \
+            --exclude='/docs' \
+            --exclude='/temp' \
+            --exclude='/tests' \
+            --exclude='/vendor' \
+            --exclude='storage/app/public' \
+            --exclude='storage/logs' \
+            --exclude='storage/framework/sessions' \
+            --exclude='storage/framework/cache' \
+            --exclude='storage/framework/views' \
+            --exclude='public/storage' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=20" \
+            ./ "$SSH_USER@$SSH_HOST:~/"
+
+      - name: Post-deploy tasks
+        env:
+          SSH_HOST: ${{ secrets.BEGET_PROD_SSH_HOST }}
+          SSH_USER: ${{ secrets.BEGET_PROD_SSH_USER }}
+          PROD_ENV: ${{ secrets.BEGET_PROD_ENV }}
+        run: |
+          printf '%s' "$PROD_ENV" > /tmp/prod.env
+
+          # .env пишем через scp: sed -i на Beget упирается в права
+          ~/retry.sh scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=20 \
+            /tmp/prod.env "$SSH_USER@$SSH_HOST:~/.env"
+
+          ~/retry.sh ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=20 \
+            "$SSH_USER@$SSH_HOST" '
+              set -e
+              cd ~
+
+              chmod 600 .env
+
+              # Каталоги кэша не приезжают через rsync (исключены), а без них
+              # artisan падает с "Please provide a valid cache path"
+              mkdir -p storage/framework/{cache/data,sessions,testing,views} storage/app/public storage/logs
+              chmod -R 775 storage bootstrap/cache
+
+              # --no-scripts: package:discover на этапе install падает с кодом 1,
+              # поэтому запускаем его отдельно следующей командой
+              php8.3 ~/composer2.phar install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+              php8.3 artisan package:discover --ansi
+              php8.3 artisan migrate --force
+              php8.3 artisan config:cache
+              php8.3 artisan route:cache
+              php8.3 artisan view:cache
+              php8.3 artisan storage:link --force
+            '
