@@ -85,14 +85,18 @@
         transform: translateY(-50%) rotate(129deg);
     }
 
-    p {
-        margin: 0;
+    // Обёртка ответа: внутри лежит HTML из редактора, поэтому отступы
+    // и фон задаём ей, а не абзацам внутри
+    .faq-list__answer {
         padding: 20px 16px;
         background: $bgLight;
         border-radius: 8px;
         font-size: 20px;
         line-height: 30px;
         color: $color;
+
+        > :first-child { margin-top: 0; }
+        > :last-child { margin-bottom: 0; }
     }
 
     /* display управляется через JS (slideDown/slideUp) */
@@ -112,7 +116,7 @@
         padding-right: 48px;
     }
 
-    .faq-list p {
+    .faq-list__answer {
         font-size: 16px;
         line-height: 1.5;
     }
