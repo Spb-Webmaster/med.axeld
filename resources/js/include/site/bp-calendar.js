@@ -58,13 +58,27 @@ function relativeLuminance([r, g, b]) {
     return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
 }
 
-/** Единственная функция расчёта цвета по верхнему давлению. */
+/**
+ * Доля пройденного отрезка от from до to.
+ * Совпадающие границы дают 1, а не деление на ноль: пороги приходят
+ * из настроек, и одинаковые значения не должны выдавать NaN вместо цвета.
+ */
+const ratio = (value, from, to) => (to === from ? 1 : clamp01((value - from) / (to - from)));
+
+/**
+ * Единственная функция расчёта цвета по верхнему давлению.
+ *
+ * Норма — диапазон (scale.normFrom … scale.normTo), внутри него ячейка белая.
+ * Ниже нормы цвет уходит в синий, выше — в красный; на границах low и high
+ * оттенок насыщается полностью и дальше не меняется.
+ */
 function colorForSystolic(sys, scale) {
     let rgb;
+
     if (sys <= scale.low) rgb = BLUE;
-    else if (sys < scale.mid) rgb = lerp(BLUE, WHITE, clamp01((sys - scale.low) / (scale.mid - scale.low)));
-    else if (sys === scale.mid) rgb = WHITE;
-    else if (sys < scale.high) rgb = lerp(WHITE, RED, clamp01((sys - scale.mid) / (scale.high - scale.mid)));
+    else if (sys < scale.normFrom) rgb = lerp(BLUE, WHITE, ratio(sys, scale.low, scale.normFrom));
+    else if (sys <= scale.normTo) rgb = WHITE;
+    else if (sys < scale.high) rgb = lerp(WHITE, RED, ratio(sys, scale.normTo, scale.high));
     else rgb = RED;
 
     return {
@@ -93,7 +107,8 @@ export function bpCalendar() {
 
     const SCALE = {
         low: Number(root.dataset.scaleLow) || 100,
-        mid: Number(root.dataset.scaleMid) || 120,
+        normFrom: Number(root.dataset.scaleNormFrom) || 120,
+        normTo: Number(root.dataset.scaleNormTo) || 130,
         high: Number(root.dataset.scaleHigh) || 150,
     };
 

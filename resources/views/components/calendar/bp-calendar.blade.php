@@ -11,7 +11,7 @@
 
     $minYear    = (int) ($minYear ?? config('site.bp_calendar.min_year', 2026));
     $yearsAhead = (int) ($yearsAhead ?? config('site.bp_calendar.years_ahead', 4));
-    $scale      = $scale ?? config('site.bp_calendar.scale', ['low' => 100, 'mid' => 120, 'high' => 150]);
+    $scale      = $scale ?? config('site.bp_calendar.scale', ['low' => 100, 'norm_from' => 120, 'norm_to' => 130, 'high' => 150]);
     $limits     = config('site.bp_calendar.limits');
 
     /*
@@ -28,7 +28,8 @@
          data-min-year="{{ $minYear }}"
          data-years-ahead="{{ $yearsAhead }}"
          data-scale-low="{{ $scale['low'] }}"
-         data-scale-mid="{{ $scale['mid'] }}"
+         data-scale-norm-from="{{ $scale['norm_from'] }}"
+         data-scale-norm-to="{{ $scale['norm_to'] }}"
          data-scale-high="{{ $scale['high'] }}"
          {{-- Сегодняшнюю дату берём с сервера: часы на машине пользователя
               могут быть сбиты, а запрет «не отмечать будущее» проверяется там же --}}
@@ -89,12 +90,14 @@
                         <div class="bp-legend__bar" id="bpLegendBar"></div>
                         <div class="bp-legend__ticks">
                             <span>{{ $scale['low'] }}</span>
-                            <span>{{ $scale['mid'] }}</span>
+                            <span>{{ $scale['norm_from'] }}–{{ $scale['norm_to'] }}</span>
                             <span>{{ $scale['high'] }} мм рт. ст.</span>
                         </div>
                     </div>
                 </div>
-                <div class="bp-legend__note">Цвет отражает верхнее (систолическое) давление</div>
+                <div class="bp-legend__note">
+                    Цвет отражает верхнее (систолическое) давление; норма — от {{ $scale['norm_from'] }} до {{ $scale['norm_to'] }}
+                </div>
             </div>
         </header>
 
