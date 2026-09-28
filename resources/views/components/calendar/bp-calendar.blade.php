@@ -82,10 +82,6 @@
             {{-- Легенда --}}
             <div class="bp-legend" aria-label="Легенда">
                 <div class="bp-legend__item">
-                    <span class="bp-legend__swatch"></span>
-                    <span>Нет записи</span>
-                </div>
-                <div class="bp-legend__item">
                     <div class="bp-legend__scale">
                         <div class="bp-legend__bar" id="bpLegendBar"></div>
                         <div class="bp-legend__ticks">
