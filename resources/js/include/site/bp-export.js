@@ -30,5 +30,25 @@ export function bpExport() {
     }
 
     mode.addEventListener('change', apply);
+
+    /*
+     | Сброс формы. Обработчик срабатывает до того, как браузер вернёт значения
+     | полей, поэтому дожидаемся следующего тика.
+     |
+     | Дальше рассылаем change вручную: нативный reset такого события не шлёт,
+     | и стилизованный список остался бы с прежней надписью на кнопке, хотя
+     | в самом <select> уже другое значение.
+     */
+    const form = root.querySelector('form');
+
+    form.addEventListener('reset', () => {
+        setTimeout(() => {
+            form.querySelectorAll('select').forEach(field => {
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+            apply();
+        }, 0);
+    });
+
     apply();
 }

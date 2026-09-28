@@ -60,8 +60,12 @@
                            :selected="old('year', $today->format('Y'))"/>
         </div>
 
-        <div class="input-button">
+        {{-- «Сбросить» возвращает форму к исходному виду: режим «Диапазон дат»
+             и период с начала месяца по сегодня. После выгрузки форма остаётся
+             в выбранном режиме, и без этой кнопки вернуться к началу нечем. --}}
+        <div class="bp-export__actions">
             <x-form.form-button type="submit">Скачать файл</x-form.form-button>
+            <x-form.form-button type="reset" variant="white">Сбросить</x-form.form-button>
         </div>
     </form>
 </div>

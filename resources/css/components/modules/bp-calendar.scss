@@ -541,9 +541,22 @@
     }
 }
 
+// Кнопки в ряд: «Скачать» и «Сбросить» по ширине содержимого
+.bp-export__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 7px;
+}
+
 @media (max-width: 640px) {
     .bp-export__row {
         grid-template-columns: minmax(0, 1fr);
+    }
+
+    // На узком экране кнопки занимают всю строку каждая
+    .bp-export__actions .btn {
+        flex: 1 1 100%;
     }
 }
 
