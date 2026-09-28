@@ -435,7 +435,15 @@ export function bpCalendar() {
             cell.style.color = c.fg;
             cell.appendChild(el('div', 'bp-bigcal__bp', `${rec.sys}/${rec.dia}`));
             cell.appendChild(el('div', 'bp-bigcal__unit', 'мм рт. ст.'));
-            cell.appendChild(el('div', 'bp-bigcal__pulse', `Пульс: ${rec.pulse} уд/мин`));
+            /*
+             | «уд/мин» отдельным узлом: на узких экранах эта приписка не влезает
+             | в ячейку и её прячет CSS. Само значение при этом остаётся,
+             | а в aria-label ниже подпись сохраняется целиком.
+             */
+            const pulse = el('div', 'bp-bigcal__pulse');
+            pulse.appendChild(document.createTextNode(`Пульс: ${rec.pulse}`));
+            pulse.appendChild(el('span', 'bp-bigcal__pulse-unit', ' уд/мин'));
+            cell.appendChild(pulse);
         } else {
             cell.classList.add('is-empty');
             cell.appendChild(el('div', 'bp-bigcal__none', future ? '—' : 'Нет записи'));

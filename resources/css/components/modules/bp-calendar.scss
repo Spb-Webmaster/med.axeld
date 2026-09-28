@@ -702,16 +702,26 @@
         font-size: 11px;
     }
 
+    // Давление помельче: в ячейку шириной около 45px оно не влезало
+    // и переносилось, оставляя пульс на обрезке строки
     .bp-bigcal__bp {
-        font-size: 14px;
+        font-size: 12px;
+        letter-spacing: -0.02em;
     }
 
     .bp-bigcal__unit {
         font-size: 8px;
     }
 
+    // Пульс, наоборот, крупнее — его читают наравне с давлением
     .bp-bigcal__pulse,
     .bp-bigcal__none {
-        font-size: 9px;
+        font-size: 11px;
+    }
+
+    // «уд/мин» на узком экране не выводим: единицы понятны из контекста,
+    // а приписка занимала целую строку. В aria-label она остаётся.
+    .bp-bigcal__pulse-unit {
+        display: none;
     }
 }
