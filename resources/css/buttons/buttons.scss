@@ -309,6 +309,18 @@
         background: $btnPrimaryBg;
         border-color: $btnPrimaryBg;
         color: $white;
+
+        /*
+         | Своё наведение обязательно: правило :hover выше специфичнее .is-active
+         | и красило текст синим поверх синей заливки — надпись исчезала.
+         | На тач-экранах наведение вдобавок залипает после нажатия, поэтому
+         | выбранный год оставался пустой пилюлей.
+         */
+        &:hover:not(:disabled) {
+            background: $btnPrimaryHover;
+            border-color: $btnPrimaryHover;
+            color: $white;
+        }
     }
 
     &:disabled {

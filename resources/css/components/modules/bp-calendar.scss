@@ -643,6 +643,17 @@
 }
 
 @media (max-width: 640px) {
+    /*
+     | Лента годов не прокручивается: скрипт показывает окно из трёх лет
+     | (COMPACT_YEARS в bp-calendar.js), листают их стрелками ‹ ›.
+     | Полоса прокрутки под пилюлями выглядела обрезком и сбивала с толку.
+     */
+    .bp-calendar__years {
+        overflow-x: visible;
+        justify-content: center;
+        padding: 4px 0;
+    }
+
     .bp-modal {
         padding: 0;
     }

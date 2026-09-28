@@ -180,6 +180,12 @@ export function bpCalendar() {
     let lastOpener = null;
     let entryOpener = null;
 
+    // Ширина, ниже которой лента годов показывает окно из трёх лет без прокрутки.
+    // Значение совпадает с медиазапросом в bp-calendar.scss
+    const COMPACT_YEARS = 3;
+    const compactQuery = window.matchMedia('(max-width: 640px)');
+    const isCompact = () => compactQuery.matches;
+
     /* ================== Легенда ================== */
     function buildLegend() {
         if (!legendBar) return;
@@ -199,11 +205,29 @@ export function bpCalendar() {
         return true;
     }
 
+    /*
+     | Какие годы показывать в ленте.
+     |
+     | На узком экране лента не прокручивается — вместо этого показываем окно
+     | из трёх лет вокруг выбранного, а листают их стрелками ‹ ›. У нижней
+     | границы окно прижимается к MIN_YEAR, чтобы пустых мест не было.
+     */
+    function stripRange() {
+        if (!isCompact()) return { from: MIN_YEAR, to: horizonYear };
+
+        let from = Math.max(MIN_YEAR, currentYear - 1);
+        let to = Math.min(horizonYear, from + COMPACT_YEARS - 1);
+        from = Math.max(MIN_YEAR, to - COMPACT_YEARS + 1);
+
+        return { from, to };
+    }
+
     function buildYearStrip() {
         if (!yearsStrip) return;
+        const { from, to } = stripRange();
         yearsStrip.innerHTML = '';
         chips = new Map();
-        for (let y = MIN_YEAR; y <= horizonYear; y++) {
+        for (let y = from; y <= to; y++) {
             const chip = el('button', 'btn-pill bp-calendar__year-chip', String(y));
             chip.type = 'button';
             chip.dataset.year = String(y);
@@ -248,6 +272,9 @@ export function bpCalendar() {
         if (next !== currentYear) {
             currentYear = next;
             renderYear();
+
+            // В узком режиме показываются только соседние годы — окно сдвинулось
+            if (isCompact()) buildYearStrip();
         }
         syncYearStrip(true);
         updateYearNav();
@@ -737,6 +764,12 @@ export function bpCalendar() {
                 first.focus();
             }
         }
+    });
+
+    // Поворот экрана переключает режим ленты, поэтому пересобираем её
+    compactQuery.addEventListener('change', () => {
+        buildYearStrip();
+        syncYearStrip(false);
     });
 
     /* ================== Старт ================== */
