@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Exports\BloodPressureExport;
+use App\Http\Requests\Cabinet\BloodPressureExportRequest;
 use App\Http\Requests\Cabinet\BloodPressureRequest;
 use App\Models\BloodPressureReading;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Дневник давления: страница календаря и запись замеров.
@@ -71,6 +75,30 @@ class BloodPressureController extends Controller
                 'pulse' => $reading->pulse,
             ],
         ]);
+    }
+
+    /**
+     * Выгрузка дневника в Excel за выбранный период.
+     *
+     * Выгружается дневник владельца — тот же, что показывает календарь,
+     * поэтому забрать его может любой вошедший.
+     */
+    public function export(BloodPressureExportRequest $request): BinaryFileResponse
+    {
+        $owner = User::owner();
+
+        abort_if($owner === null, 404, 'Дневник ещё не заведён.');
+
+        $export = new BloodPressureExport(
+            $request->periodFrom(),
+            $request->periodTo(),
+            $owner->id,
+        );
+
+        // Файл лежит во временной папке и после отдачи не нужен
+        return response()
+            ->download($export->toTempFile(), $export->fileName())
+            ->deleteFileAfterSend();
     }
 
     /** Удаление замера за день */

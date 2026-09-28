@@ -520,6 +520,33 @@
     opacity: 0.9;
 }
 
+// ——— Выгрузка в Excel ———
+.bp-export__form {
+    max-width: 560px;
+}
+
+.bp-export__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+
+    // Одиночное поле (например, только год) не растягиваем на всю ширину
+    &:has(> :only-child) {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 272px;
+    }
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .bp-export__row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 // ——— Форма замера за день ———
 .bp-entry {
     position: fixed;

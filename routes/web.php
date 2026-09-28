@@ -46,6 +46,7 @@ Route::controller(BloodPressureController::class)
     ->name('cabinet.pressure')
     ->group(function () {
         Route::get('/', 'index');
+        Route::get('/export', 'export')->name('.export');
         Route::post('/', 'store')->name('.store');
 
         // Замер на день один, поэтому ключ записи — дата, а не id

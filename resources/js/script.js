@@ -12,6 +12,7 @@ import {citySelector} from "./include/site/city-selector";
 import {bpCalendar} from "./include/site/bp-calendar";
 import {mzSelect} from "./include/select/mz-select";
 import {calendar} from "./include/datepicker/calendar";
+import {bpExport} from "./include/site/bp-export";
 
 
 
@@ -28,4 +29,5 @@ document.addEventListener('DOMContentLoaded', function () {
     bpCalendar() // календарь дневника давления
     mzSelect() // стилизованные выпадающие списки
     calendar() // календарь в полях даты
+    bpExport() // выбор периода для выгрузки в Excel
 });
