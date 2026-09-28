@@ -106,8 +106,10 @@
 .cab-content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     min-width: 0;
+
+    // Без gap: расстояние между блоками задают их собственные margin-bottom,
+    // иначе отступы складывались бы и между карточками выходило 36px
 }
 
 .cab-content__sub {
@@ -131,12 +133,17 @@
 // ——— Карточка раздела ———
 .cab-card {
     padding: 22px 24px 24px;
+    margin-bottom: 20px;
     background: $cabCardBg;
     border: 1px solid $cabBorder;
     border-radius: 14px;
 
     // Отступ от верха при переходе по якорю (#password)
     scroll-margin-top: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .cab-card__head {

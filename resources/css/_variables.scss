@@ -138,6 +138,13 @@ $btnAccentText:    #C2331F; // красный текст на белом: кон
 $btnMutedBg:       #6B7688;
 $btnMutedHover:    #59636F;
 
+// Зелёный здесь — не часть гаммы сайта, а цвет формата Excel:
+// по нему кнопку выгрузки узнают, не читая подпись. Контраст белого
+// текста на $btnExcelBg — 5.8:1, AA проходит.
+$btnExcelBg:       #217346;
+$btnExcelHover:    #1A5C38;
+$btnExcelActive:   #14492C;
+
 $btnRadius:        10px;
 $btnHeight:        46px;
 $btnHeightSm:      36px;

@@ -166,6 +166,27 @@
     }
 }
 
+// ——— Зелёная: выгрузка в Excel ———
+// Единственное место, где в проекте есть зелёный: это цвет формата файла,
+// а не гаммы сайта — по нему кнопку узнают до чтения подписи
+.btn.btn_excel {
+    background: $btnExcelBg;
+    border-color: transparent;
+    color: $white;
+
+    &:hover {
+        background: $btnExcelHover;
+    }
+
+    &:active {
+        background: $btnExcelActive;
+    }
+
+    &:focus-visible {
+        outline-color: $btnExcelBg;
+    }
+}
+
 // ——— Серая: нейтральное действие ———
 .btn.btn_grey {
     background: $btnMutedBg;

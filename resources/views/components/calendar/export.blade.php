@@ -64,7 +64,18 @@
              и период с начала месяца по сегодня. После выгрузки форма остаётся
              в выбранном режиме, и без этой кнопки вернуться к началу нечем. --}}
         <div class="bp-export__actions">
-            <x-form.form-button type="submit">Скачать файл</x-form.form-button>
+            <x-form.form-button type="submit" variant="excel">
+                {{-- Лист с крестиком — привычный значок файла Excel.
+                     aria-hidden: подпись на кнопке уже всё говорит --}}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 3v5h5"/>
+                    <path d="M9.5 12.5l5 5M14.5 12.5l-5 5"/>
+                </svg>
+                <span>Скачать файл</span>
+            </x-form.form-button>
+
             <x-form.form-button type="reset" variant="white">Сбросить</x-form.form-button>
         </div>
     </form>
